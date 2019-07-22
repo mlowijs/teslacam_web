@@ -63,8 +63,10 @@ export default class WebServer {
     private setupSocketIo(httpServer: http.Server) {
         this.io = socketio(httpServer);
 
-        this.io.on("connection", (_: Socket) => {
+        this.io.on("connection", (socket: Socket) => {
             this.log.debug("Accepted new socket.io connection");
+            socket.emit("test", "herro2");
+
         });
 
         const emitter = (name: string) => (...args: any[]) => this.io.emit(name, args);

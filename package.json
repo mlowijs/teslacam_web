@@ -5,6 +5,7 @@
   "main": "dist/main.js",
   "ts:main": "src/server/main.ts",
   "scripts": {
+    "build": "rimraf dist && run-s build:**",
     "build:client": "webpack --config webpack.client.js --progress",
     "build:server": "webpack --config webpack.server.js --progress",
     "start": "run-p start:** watch:server",
@@ -33,6 +34,7 @@
     "@types/react-dom": "^16.8.4",
     "@types/rimraf": "^2.0.2",
     "@types/socket.io": "^2.1.2",
+    "@types/socket.io-client": "^1.4.32",
     "@types/yaml": "^1.0.2",
     "awesome-typescript-loader": "^5.2.1",
     "copy-webpack-plugin": "^5.0.3",
