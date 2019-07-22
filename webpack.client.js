@@ -24,6 +24,20 @@ module.exports = {
     module: {
         rules: [
             {
+                test: /\.css$/,
+                use: [
+                    "style-loader",
+                    "css-modules-typescript-loader",
+                    {
+                        loader: "css-loader",
+                        options: {
+                            sourceMap: !isProduction,
+                            modules: true
+                        }
+                    },
+                ]
+            },
+            {
                 test: /\.tsx?$/,
                 loader: "awesome-typescript-loader",
             }
