@@ -22,15 +22,20 @@ context({
         ]
     }),
 
-    clean: () => {
-        src("dist/").clean("dist/").exec();
+    copyConfig: () => {
     }
 });
 
-task("default", context => {
-    const fuse = context.config;
+task("clean", context => {
+    src("./dist").clean("dist/").exec();
+});
 
-    // context.clean();
+task("copyConfig", context => {
+    src("config.yml", { base: "src/server" }).dest("./dist").exec();
+});
+
+task("build", context => {
+    const fuse = context.config;
 
     fuse.bundle(CLIENT_BUNDLE)
         .watch("client/**")
@@ -44,3 +49,5 @@ task("default", context => {
 
     fuse.run();
 });
+
+task("default", ["clean", "build", "copyConfig"]);
