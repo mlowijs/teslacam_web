@@ -1,11 +1,13 @@
-const { FuseBox, WebIndexPlugin, CSSPlugin, CSSModulesPlugin } = require("fuse-box");
+const { FuseBox, WebIndexPlugin, CSSPlugin, CSSModulesPlugin, QuantumPlugin } = require("fuse-box");
 const { context, task, src } = require("fuse-box/sparky");
 
 const CLIENT_BUNDLE = "static/client";
 const SERVER_BUNDLE = "main";
 
+const isProduction = process.env.NODE_ENV === "production";
+
 context({
-    config: FuseBox.init({
+    clientConfig: FuseBox.init({
         homeDir: "src",
         output: "dist/$name.js",
         useTypescriptCompiler: true,
@@ -18,12 +20,25 @@ context({
                     CLIENT_BUNDLE
                 ],
                 target: "static/index.html"
+            }),
+            isProduction && QuantumPlugin({
+                target: "browser",
+                bakeApiIntoBundle: CLIENT_BUNDLE
             })
         ]
     }),
 
-    copyConfig: () => {
-    }
+    serverConfig: FuseBox.init({
+        homeDir: "src",
+        output: "dist/$name.js",
+        useTypescriptCompiler: true,
+        plugins: [
+            isProduction && QuantumPlugin({
+                target: "server",
+                bakeApiIntoBundle: SERVER_BUNDLE
+            })
+        ]
+    })
 });
 
 task("clean", context => {
@@ -35,19 +50,20 @@ task("copyConfig", context => {
 });
 
 task("build", context => {
-    const fuse = context.config;
+    
 
-    fuse.bundle(CLIENT_BUNDLE)
+    context.clientConfig.bundle(CLIENT_BUNDLE)
         .watch("client/**")
         .hmr({ reload: true })
         .instructions("> client/index.tsx");
 
-    fuse.bundle(SERVER_BUNDLE)
+    context.serverConfig.bundle(SERVER_BUNDLE)
         .watch("server/**")
         .instructions("> [server/main.ts]")
         .completed(proc => proc.start());
 
-    fuse.run();
+    context.serverConfig.run();
+    context.clientConfig.run();
 });
 
-task("default", ["clean", "build", "copyConfig"]);
+task("default", ["copyConfig", "build"]);
