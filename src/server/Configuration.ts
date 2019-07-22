@@ -16,8 +16,6 @@ export type Configuration = {
 }
 
 export function getConfiguration() {
-    console.log(config);
-
     const data = fs.readFileSync(config, "utf8");
 
     return yaml.parse(data) as Configuration;

@@ -30,8 +30,8 @@ export default class StateManager extends EventEmitter {
         this.archiver = archiver;
         this.uploader = uploader;
 
-        // this.startArchiveTimer(config.archiveInterval);
-        // this.startUploadTimer(config.uploadInterval);
+        this.startArchiveTimer(config.archiveInterval);
+        this.startUploadTimer(config.uploadInterval);
     }
 
     get nextArchiveAt(): Moment {

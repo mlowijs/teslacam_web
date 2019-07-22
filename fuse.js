@@ -35,13 +35,8 @@ context(class {
             homeDir: "src",
             output: "dist/$name.js",
             useTypescriptCompiler: true,
+            hash: false,
             plugins: [
-                CopyPlugin({
-                    files: ["server/config.yml"],
-                    dest: ".",
-                    resolve: "dist",
-                    useDefault: false
-                }),
                 isProduction && QuantumPlugin({
                     target: "server",
                     bakeApiIntoBundle: SERVER_BUNDLE
@@ -55,13 +50,21 @@ task("clean", async () => {
     await src("./dist").clean("dist/").exec();
 });
 
-task("copyConfig", async () => {
-    await src("config.yml", { base: "src/server" }).dest("./dist").exec();
+task("copy", async () => {
+    await src("*.yml", { base: "src/server" }).dest("dist/").exec();
 });
 
 task("build", async context => {
-    const server = context.getServerConfig();
     const client = context.getClientConfig();
+
+    client.bundle(CLIENT_BUNDLE)
+        .watch("client/**")
+        .hmr()
+        .instructions("> client/index.tsx");
+
+    await client.run();
+
+    const server = context.getServerConfig();
 
     server.bundle(SERVER_BUNDLE)
         .watch("server/**")
@@ -69,13 +72,6 @@ task("build", async context => {
         .completed(proc => proc.start());
 
     await server.run();
-
-    client.bundle(CLIENT_BUNDLE)
-        .watch("client/**")
-        .hmr({ reload: true })
-        .instructions("> client/index.tsx");
-
-    await client.run();
 });
 
-task("default", ["clean", "build"]);
+task("default", ["clean", "copy", "build"]);

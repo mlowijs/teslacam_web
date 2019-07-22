@@ -37,7 +37,7 @@ export default class WebServer {
             next();
         });
 
-        app.use("/static", express.static(path.resolve("static")));
+        app.use(express.static(path.resolve("static")));
     
         this.setupRoutes(config, app);
 

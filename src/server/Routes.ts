@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { Configuration } from "./Configuration";
 
 export const index = (_: Request, res: Response) => {
-    res.redirect("/public/index.html");
+    res.redirect("/index.html");
 };
 
 export const downloadFile = (config: Configuration) => (req: Request, res: Response) => {

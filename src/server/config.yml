@@ -1,11 +1,15 @@
 port: 3000
+
 logLevel: "debug"
+
 usbMountFolder: "/mnt/usbfs"
 archiveFolder: "/cache"
+
 archiveRecent: false
-archiveSaved: true,
-archiveInterval: 900,
-uploadInterval: 300,
+archiveSaved: false
+archiveInterval: 900
+uploadInterval: 300
+
 fileSystemFileUploader:
   path: "/mnt/nfs"
   requiresMount: true
