@@ -27,10 +27,7 @@ export default class WebServer {
 
     public start(config: Configuration) {
         const app = express();
-        const server = http.createServer(app);
-        this.setupSocketIo(server);
 
-        // Add cache header
         app.use((_: Request, res: Response, next: NextFunction) => {
             res.setHeader("Cache-Control", "no-cache");
 
@@ -41,7 +38,10 @@ export default class WebServer {
     
         this.setupRoutes(config, app);
 
-        server.listen(config.port, () => this.log.info("Started web server on port %d", config.port));
+        const server = http.createServer(app);
+        this.setupSocketIo(server);
+        
+        server.listen(config.port, () => this.log.info("Started web server on port %d", config.port));        
     }
 
     private setupRoutes(config: Configuration, app: core.Express) {

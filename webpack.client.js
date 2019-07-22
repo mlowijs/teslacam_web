@@ -32,5 +32,10 @@ module.exports = {
 
     plugins: [
         htmlWebpackPlugin
-    ]
+    ],
+
+    devServer: {
+        port: 3001,
+        hot: true
+    }
 };

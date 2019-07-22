@@ -5,9 +5,11 @@
   "main": "dist/main.js",
   "ts:main": "src/server/main.ts",
   "scripts": {
-    "start": "run-s build:**",
     "build:client": "webpack --config webpack.client.js --progress",
-    "build:server": "webpack --config webpack.server.js --progress"
+    "build:server": "webpack --config webpack.server.js --progress",
+    "start": "run-p start:**",
+    "start:client": "webpack-dev-server --config webpack.client.js",
+    "start:server": "node-hot --config webpack.server.js"
   },
   "author": "Michiel Lowijs",
   "license": "ISC",
@@ -24,6 +26,7 @@
     "yaml": "^1.6.0"
   },
   "devDependencies": {
+    "@babel/core": "^7.5.5",
     "@types/express": "^4.17.0",
     "@types/pino": "^5.8.8",
     "@types/react": "^16.8.23",
@@ -35,10 +38,12 @@
     "copy-webpack-plugin": "^5.0.3",
     "fuse-box": "^3.7.1",
     "html-webpack-plugin": "^3.2.0",
+    "node-hot-loader": "^1.15.3",
     "npm-run-all": "^4.1.5",
     "typescript": "^3.5.3",
     "webpack": "^4.36.1",
     "webpack-cli": "^3.3.6",
+    "webpack-dev-server": "^3.7.2",
     "webpack-node-externals": "^1.7.2"
   }
 }
