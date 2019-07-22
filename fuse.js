@@ -15,7 +15,7 @@ context({
             WebIndexPlugin({
                 template: "src/client/static/index.html",
                 bundles: [
-                    FRONTEND_BUNDLE
+                    CLIENT_BUNDLE
                 ],
                 target: "static/index.html"
             })
@@ -30,10 +30,10 @@ context({
 task("default", context => {
     const fuse = context.config;
 
-    context.clean();
+    // context.clean();
 
     fuse.bundle(CLIENT_BUNDLE)
-        .watch("frontend/**")
+        .watch("client/**")
         .hmr({ reload: true })
         .instructions("> client/index.tsx");
 

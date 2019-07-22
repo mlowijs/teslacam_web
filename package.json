@@ -26,6 +26,7 @@
     "@types/rimraf": "^2.0.2",
     "@types/socket.io": "^2.1.2",
     "@types/yaml": "^1.0.2",
-    "fuse-box": "^3.7.1"
+    "fuse-box": "^3.7.1",
+    "typescript": "^3.5.3"
   }
 }
