@@ -2,7 +2,7 @@ import System from "./System";
 import { Logger } from "pino";
 import { Configuration } from "../Configuration";
 import FileSystem, { FileSystemEntry } from "./FileSystem";
-import { TESLA_CAM, RECENT_CLIPS, SAVED_CLIPS, ONE_MEGABYTE } from "../../Constants";
+import { TESLA_CAM, RECENT_CLIPS, SAVED_CLIPS, ONE_MEGABYTE, ARCHIVE_STARTED, ARCHIVE_COMPLETED } from "../../Constants";
 import LogFactory from "./LogFactory";
 import { EventEmitter } from "events";
 
@@ -23,6 +23,7 @@ export default class Archiver extends EventEmitter {
         const { log, config, system } = this;
 
         log.info("Starting archive");
+        this.emit(ARCHIVE_STARTED);
 
         system.unmountDevices(config.usbMountFolder);
 
@@ -41,6 +42,8 @@ export default class Archiver extends EventEmitter {
             } catch (e) {
                 log.error(e.message);
             }
+
+            this.emit(ARCHIVE_COMPLETED);
         }
     }
 

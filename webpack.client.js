@@ -1,10 +1,15 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const Dotenv = require("dotenv-webpack");
 
 const isProduction = process.env.NODE_ENV === "production";
 
 const htmlWebpackPlugin = new HtmlWebpackPlugin({
     template: "./src/client/static/index.html",
+});
+
+const dotenv = new Dotenv({
+    path: isProduction ? "./src/client/.env" : "./src/client/.env.development"
 });
 
 module.exports = {
@@ -45,7 +50,8 @@ module.exports = {
     },
 
     plugins: [
-        htmlWebpackPlugin
+        htmlWebpackPlugin,
+        dotenv
     ],
 
     devServer: {

@@ -4,6 +4,7 @@ import { FileUploader } from "./FileUploader";
 import FileSystem from "./FileSystem";
 import LogFactory from "./LogFactory";
 import { EventEmitter } from "events";
+import { UPLOAD_STARTED, UPLOAD_COMPLETED } from "../../Constants";
 
 export default class Uploader extends EventEmitter {
     private readonly log: Logger;
@@ -23,6 +24,7 @@ export default class Uploader extends EventEmitter {
 
         try {
             log.info("Starting upload archived clips");
+            this.emit(UPLOAD_STARTED);
 
             const files = FileSystem.getFolderContents(config.archiveFolder);
 
@@ -34,6 +36,8 @@ export default class Uploader extends EventEmitter {
             log.info("Upload archived clips completed");
         } catch (e) {
             log.fatal(e.message);
+        } finally {
+            this.emit(UPLOAD_COMPLETED);
         }
     }
 }

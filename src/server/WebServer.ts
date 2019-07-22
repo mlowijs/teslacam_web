@@ -12,8 +12,9 @@ import Archiver from "./services/Archiver";
 import Uploader from "./services/Uploader";
 import {
     ARCHIVE_STARTED, ARCHIVE_COMPLETED, ARCHIVE_STARTS_AT,
-    UPLOAD_STARTED, UPLOAD_COMPLETED, UPLOAD_STARTS_AT, UPLOADING_FILE
+    UPLOAD_STARTED, UPLOAD_COMPLETED, UPLOAD_STARTS_AT, UPLOADING_FILE, CLIENT_CONNECTED
  } from "../Constants";
+import { ClientConnectedEvent } from "../model/Events";
 
 export default class WebServer {
     private readonly log: Logger;
@@ -65,8 +66,10 @@ export default class WebServer {
 
         this.io.on("connection", (socket: Socket) => {
             this.log.debug("Accepted new socket.io connection");
-            socket.emit("test", "herro2");
 
+            socket.emit(CLIENT_CONNECTED, new ClientConnectedEvent(
+                this.stateManager.nextArchiveAt, this.stateManager.nextUploadAt
+            ));
         });
 
         const emitter = (name: string) => (...args: any[]) => this.io.emit(name, args);

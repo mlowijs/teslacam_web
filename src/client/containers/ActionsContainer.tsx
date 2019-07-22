@@ -1,15 +1,17 @@
 import * as React from "react";
-// import { Actions } from "../components/Actions";
-import io from "socket.io-client";
+import { getSocket } from "../socket";
+import { CLIENT_CONNECTED } from "../../Constants";
+import { ClientConnectedEvent } from "../../model/Events";
+import { Actions } from "../components/Actions";
 
 export const ActionsContainer: React.FunctionComponent = () => {
-    const [test, setTest] = React.useState("");
+    const [event, setEvent] = React.useState<ClientConnectedEvent>(null);
 
     React.useEffect(() => {
-        const socket = io.connect("http://localhost:3000");
+        const socket = getSocket();
 
-        socket.on("test", (stuff: string) => {
-            setTest(stuff);
+        socket.on(CLIENT_CONNECTED, (event: ClientConnectedEvent) => {
+            setEvent(event);
         });
 
         return () => {
@@ -17,7 +19,8 @@ export const ActionsContainer: React.FunctionComponent = () => {
         }
     }, []);
 
-    return <div>
-        {test}
-    </div>;
+    console.log(event);
+
+
+    return event ? <Actions event={event} /> : null;
 }
