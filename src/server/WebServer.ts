@@ -10,13 +10,20 @@ import socketio, { Socket } from "socket.io";
 import * as http from "http";
 import Archiver from "./services/Archiver";
 import Uploader from "./services/Uploader";
-import { ARCHIVE_STARTED, ARCHIVE_COMPLETED, UPLOAD_STARTED, UPLOAD_COMPLETED, UPLOAD_STARTS_AT, UPLOADING_FILE, ARCHIVE_STARTS_AT } from "../Constants";
+import {
+    ARCHIVE_STARTED, ARCHIVE_COMPLETED, ARCHIVE_STARTS_AT,
+    UPLOAD_STARTED, UPLOAD_COMPLETED, UPLOAD_STARTS_AT, UPLOADING_FILE
+ } from "../Constants";
 
 export default class WebServer {
     private readonly log: Logger;
     private readonly stateManager: StateManager;
     private readonly archiver: Archiver;
     private readonly uploader: Uploader;
+
+    private app: core.Express;
+    private server: http.Server;
+    private io: socketio.Server;
 
     constructor(logFactory: LogFactory, stateManager: StateManager, archiver: Archiver, uploader: Uploader) {
         this.log = logFactory.getLog("WebServer");
@@ -26,37 +33,41 @@ export default class WebServer {
     }
 
     public start(config: Configuration) {
-        const app = express();
+        this.app = express();
+        this.server = http.createServer(this.app);
+        this.setupSocketIo(this.server);
 
-        app.use((_: Request, res: Response, next: NextFunction) => {
+        this.app.use((_: Request, res: Response, next: NextFunction) => {
             res.setHeader("Cache-Control", "no-cache");
 
             next();
         });
 
-        app.use(express.static(path.resolve("static")));
-    
-        this.setupRoutes(config, app);
+        this.app.use(express.static(path.resolve("static")));
 
-        const server = http.createServer(app);
-        this.setupSocketIo(server);
-        
-        server.listen(config.port, () => this.log.info("Started web server on port %d", config.port));        
+        this.setupRoutes(config);
+
+        this.server.listen(config.port, () => this.log.info("Started web server on port %d", config.port));
     }
 
-    private setupRoutes(config: Configuration, app: core.Express) {
-        app.get("/", index);
-        app.get("/download/:file", downloadFile(config));
+    public stop() {
+        this.io.close();
+        this.server.close();
+    }
+
+    private setupRoutes(config: Configuration) {
+        this.app.get("/", index);
+        this.app.get("/download/:file", downloadFile(config));
     }
 
     private setupSocketIo(httpServer: http.Server) {
-        const io = socketio(httpServer);
+        this.io = socketio(httpServer);
 
-        io.on("connection", (_: Socket) => {
+        this.io.on("connection", (_: Socket) => {
             this.log.debug("Accepted new socket.io connection");
         });
 
-        const emitter = (name: string) => (...args: any[]) => io.emit(name, args);
+        const emitter = (name: string) => (...args: any[]) => this.io.emit(name, args);
 
         [ARCHIVE_STARTED, ARCHIVE_COMPLETED].forEach(e => this.archiver.on(e, emitter(e)));
         [UPLOAD_STARTED, UPLOAD_COMPLETED, UPLOADING_FILE].forEach(e => this.uploader.on(e, emitter(e)));
