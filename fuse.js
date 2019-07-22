@@ -35,7 +35,7 @@ context(class {
             homeDir: "src",
             output: "dist/$name.js",
             useTypescriptCompiler: true,
-            hash: false,
+            target: "server@esnext",
             plugins: [
                 isProduction && QuantumPlugin({
                     target: "server",

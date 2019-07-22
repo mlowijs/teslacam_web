@@ -1,6 +1,6 @@
 import * as fs from "fs";
 import * as yaml from "yaml";
-import config from "./config.yml";
+import { CONFIG_FILE_NAME } from "../Constants";
 
 export type Configuration = {
     [key: string]: any;
@@ -16,7 +16,7 @@ export type Configuration = {
 }
 
 export function getConfiguration() {
-    const data = fs.readFileSync(config, "utf8");
+    const data = fs.readFileSync(CONFIG_FILE_NAME, "utf8");
 
     return yaml.parse(data) as Configuration;
 }

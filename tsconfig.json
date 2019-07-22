@@ -1,6 +1,6 @@
 {
     "compilerOptions": {
-        "outDir": "dist/",
+        "outDir": "./dist/",
         "noImplicitAny": true,
         "noImplicitReturns": true,
         "noUnusedLocals": true,
@@ -8,7 +8,9 @@
         "jsx": "react",
         "module": "commonjs",
         "esModuleInterop": true,
-        "target": "es2016"
+        "target": "es2016",
+        "allowJs": true,
+        "moduleResolution": "node"
     },
     "include": [
         "src/**/*.ts",
