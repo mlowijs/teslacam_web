@@ -27,20 +27,21 @@ export default class WebServer {
 
     public start(config: Configuration) {
         const app = express();
-        const httpServer = http.createServer(app);
-        this.setupSocketIo(httpServer);
-            
+        const server = http.createServer(app);
+        this.setupSocketIo(server);
+
+        // Add cache header
         app.use((_: Request, res: Response, next: NextFunction) => {
             res.setHeader("Cache-Control", "no-cache");
 
             next();
         });
 
-        app.use("/public", express.static(path.resolve("public")));
+        app.use("/static", express.static(path.resolve("static")));
     
         this.setupRoutes(config, app);
 
-        httpServer.listen(config.port, () => this.log.info("Started web server on port %d", config.port));
+        server.listen(config.port, () => this.log.info("Started web server on port %d", config.port));
     }
 
     private setupRoutes(config: Configuration, app: core.Express) {
