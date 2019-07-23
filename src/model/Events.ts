@@ -13,11 +13,11 @@ export class FileUploadEvent {
 }
 
 export class ClientConnectedEvent {
-    nextArchiveAt: Moment;
-    nextUploadAt: Moment;
+    nextArchiveAt: string;
+    nextUploadAt: string;
 
     constructor(nextArchiveAt: Moment, nextUploadAt: Moment) {
-        this.nextArchiveAt = nextArchiveAt;
-        this.nextUploadAt = nextUploadAt;
+        this.nextArchiveAt = nextArchiveAt.toISOString();
+        this.nextUploadAt = nextUploadAt.toISOString();
     }
 }

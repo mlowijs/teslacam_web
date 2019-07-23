@@ -1,26 +1,16 @@
 import * as React from "react";
-import { getSocket } from "../socket";
 import { CLIENT_CONNECTED } from "../../Constants";
 import { ClientConnectedEvent } from "../../model/Events";
 import { Actions } from "../components/Actions";
-
-const socket = getSocket();
+import { useEvent } from "../hooks/SocketContext";
 
 export const ActionsContainer: React.FunctionComponent = () => {
-    const [event, setEvent] = React.useState<ClientConnectedEvent>(null);
+    const [ccEvent, setCcEvent] = React.useState<ClientConnectedEvent>(null);
 
-    React.useEffect(() => {
-        socket.on(CLIENT_CONNECTED, (event: ClientConnectedEvent) => {
-            setEvent(event);
-        });
+    useEvent(CLIENT_CONNECTED, (evt: ClientConnectedEvent) => {
+        console.log(evt);
+        setCcEvent(evt);
+    }, [ccEvent]);
 
-        return () => {
-            socket.off(CLIENT_CONNECTED);
-        }
-    }, [event]);
-
-    console.log(event);
-
-
-    return event ? <Actions event={event} /> : null;
+    return event ? <Actions event={ccEvent} /> : null;
 }

@@ -7,6 +7,6 @@ interface Props {
 
 export const Actions: React.FunctionComponent<Props> = (props) =>
     <div>
-        <div>arch: {props.event.nextArchiveAt.fromNow()}</div>
-        <div>upl: {props.event.nextUploadAt.fromNow()}</div>
+        <div>arch: {props.event.nextArchiveAt}</div>
+        <div>upl: {props.event.nextUploadAt}</div>
     </div>;
