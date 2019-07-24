@@ -1,20 +1,28 @@
 import * as React from "react";
 import ActionsContainer from "../containers/ActionsContainer";
 import StatusContainer from "../containers/StatusContainer";
-import { Container, Tile, Section } from "bloomer";
+import { Container, Tile, Section, Columns, Column } from "bloomer";
 
 const IndexPage: React.FunctionComponent = () =>
     <Section>
         <Container>
+            <Columns>
+                <Column>
+                    <StatusContainer />
+                </Column>
+                <Column>
+                    <ActionsContainer />
+                </Column>
+            </Columns>
+            
             <Tile isAncestor>
                 <Tile isSize={6} isVertical isParent>
-                    <ActionsContainer />
                     <Tile isChild>Saved</Tile>
                     <Tile isChild>Recent</Tile>
                 </Tile>
 
                 <Tile isVertical isParent>
-                    <StatusContainer />
+
                     <Tile isChild>Archive</Tile>
                 </Tile>
             </Tile>
