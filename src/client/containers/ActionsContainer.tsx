@@ -12,11 +12,23 @@ const ActionsContainer: React.FunctionComponent = () => {
         setCcEvent(evt);
     }, [ccEvent]);
 
-    const onButton1Click = () => {
-        console.log("clicked button 1");
+    const onStartArchiverButtonClick = () => {
+        console.log("Start Archiving");
     }
 
-    return <Actions event={ccEvent} onButton1Click={onButton1Click} />;
+    const onOptionsButtonClick = () => {
+        console.log("Options clicked");
+    }
+
+    const onStartUploaderButtonClick = () => {
+        console.log("Start uploader");
+    }
+
+    const onSyncRecentsButtonClick = () => {
+        console.log("Sync recents");
+    }
+
+    return <Actions event={ccEvent} onStartArchiverButtonClick={onStartArchiverButtonClick} onOptionsButtonClick={onOptionsButtonClick} onStartUploaderButtonClick={onStartUploaderButtonClick} onSyncRecentsButtonClick={onSyncRecentsButtonClick} />;
 };
 
 export default ActionsContainer;

@@ -6,13 +6,18 @@ import * as styles from "./Actions.scss";
 
 interface Props {
     event: ClientConnectedEvent;
-    onButton1Click: () => void;
+    onSyncRecentsButtonClick: () => void;
+    onStartArchiverButtonClick: () => void;
+    onStartUploaderButtonClick: () => void;
+    onOptionsButtonClick: () => void;
 }
 
 const Actions: React.FunctionComponent<Props> = (props) =>
     <>
-        <Button className={styles.button} onClick={props.onButton1Click}>Button 1</Button>
-        <Button className={styles.button}>Button 2</Button>
+        <Button className={styles.button} onClick={props.onSyncRecentsButtonClick}>Sync Recents</Button>
+        <Button className={styles.button} onClick={props.onStartArchiverButtonClick}>Start Archiver</Button>
+        <Button className={styles.button} onClick={props.onStartUploaderButtonClick}>Start Uploader</Button>
+        <Button className={styles.button} onClick={props.onOptionsButtonClick}>Options</Button>
     </>;
 
 export default Actions;

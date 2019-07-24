@@ -11,6 +11,8 @@ const IndexPage: React.FunctionComponent = () =>
         <Column>
             <Box>
                 <Title size={4}>Status</Title>
+                <p>Something: Something</p>
+                <p>Something: something2</p>
             </Box>
         </Column>
     </Columns>;
