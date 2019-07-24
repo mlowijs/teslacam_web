@@ -1,11 +1,17 @@
 import * as React from "react";
-import { ActionsContainer } from "../containers/ActionsContainer";
-import { FilesContainer } from "../containers/FilesContainer";
+import { Columns, Column, Box } from "bloomer";
+import ActionsContainer from "../containers/ActionsContainer";
 
-export const IndexPage: React.FunctionComponent = () =>
-    <div>
-        <h1>TeslaCam Browser</h1>
+const IndexPage: React.FunctionComponent = () =>
+    <Columns>
+        <Column isSize="3/4">
+            <ActionsContainer />
+        </Column>
+        <Column>
+            <Box>
+                <h2>Status</h2>
+            </Box>
+        </Column>
+    </Columns>;
 
-        <ActionsContainer />
-        <FilesContainer />
-    </div>;
+export default IndexPage;

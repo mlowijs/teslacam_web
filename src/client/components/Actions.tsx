@@ -1,12 +1,15 @@
 import * as React from "react";
 import { ClientConnectedEvent } from "../../model/Events";
+import { Button } from "bloomer";
 
 interface Props {
     event: ClientConnectedEvent;
 }
 
-export const Actions: React.FunctionComponent<Props> = (props) =>
-    <div>
-        <div>arch: {props.event.nextArchiveAt}</div>
-        <div>upl: {props.event.nextUploadAt}</div>
-    </div>;
+const Actions: React.FunctionComponent<Props> = () =>
+    <>
+        <Button>Button 1</Button>
+        <Button>Button 2</Button>
+    </>
+
+export default Actions;

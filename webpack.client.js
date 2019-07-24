@@ -32,14 +32,15 @@ module.exports = {
                 test: /\.css$/,
                 use: [
                     "style-loader",
-                    "css-modules-typescript-loader",
-                    {
-                        loader: "css-loader",
-                        options: {
-                            sourceMap: !isProduction,
-                            modules: true
-                        }
-                    },
+                    "css-loader"
+                    // "css-modules-typescript-loader",
+                    // {
+                    //     loader: "css-loader",
+                    //     options: {
+                    //         sourceMap: !isProduction,
+                    //         modules: true
+                    //     }
+                    // },
                 ]
             },
             {

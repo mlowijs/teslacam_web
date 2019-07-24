@@ -1,7 +1,13 @@
 import * as React from "react";
-import { IndexPage } from "../pages/IndexPage";
+import { Container } from "bloomer";
+import Header from "../components/Header";
+import IndexPage from "../pages/IndexPage";
 
-export const App: React.FunctionComponent = () =>
-    <div>
+const App: React.FunctionComponent = () =>
+    <Container>
+        <Header />
+
         <IndexPage />
-    </div>;
+    </Container>;
+
+export default App;
