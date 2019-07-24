@@ -29,18 +29,30 @@ module.exports = {
     module: {
         rules: [
             {
+                test: /\.scss$/,
+                use: [
+                    {
+                        loader: "style-loader",
+                        options: {
+                            hmr: !isProduction
+                        }
+                    },
+                    "css-modules-typescript-loader",
+                    {
+                        loader: "css-loader",
+                        options: {
+                            sourceMap: !isProduction,
+                            modules: true
+                        }
+                    },
+                    "sass-loader"
+                ]
+            },
+            {
                 test: /\.css$/,
                 use: [
                     "style-loader",
                     "css-loader"
-                    // "css-modules-typescript-loader",
-                    // {
-                    //     loader: "css-loader",
-                    //     options: {
-                    //         sourceMap: !isProduction,
-                    //         modules: true
-                    //     }
-                    // },
                 ]
             },
             {
