@@ -1,8 +1,12 @@
 import * as React from "react";
+import Files from "../components/Files";
 
-const FilesContainer: React.FunctionComponent = () =>
-    <div>
-        <h2>Files</h2>
-    </div>;
+interface Props {
+    title: string;
+}
+
+const FilesContainer: React.FunctionComponent<Props> = (props) => {
+    return <Files {...props} />;
+}
 
 export default FilesContainer;

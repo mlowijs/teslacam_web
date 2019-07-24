@@ -2,6 +2,7 @@ import * as React from "react";
 import ActionsContainer from "../containers/ActionsContainer";
 import StatusContainer from "../containers/StatusContainer";
 import { Container, Tile, Section, Columns, Column } from "bloomer";
+import FilesContainer from "../containers/FilesContainer";
 
 const IndexPage: React.FunctionComponent = () =>
     <Section>
@@ -17,13 +18,12 @@ const IndexPage: React.FunctionComponent = () =>
             
             <Tile isAncestor>
                 <Tile isSize={6} isVertical isParent>
-                    <Tile isChild>Saved</Tile>
-                    <Tile isChild>Recent</Tile>
+                    <FilesContainer title="Saved" />
+                    <FilesContainer title="Recent" />
                 </Tile>
 
                 <Tile isVertical isParent>
-
-                    <Tile isChild>Archive</Tile>
+                    <FilesContainer title="Archive" />
                 </Tile>
             </Tile>
         </Container>
