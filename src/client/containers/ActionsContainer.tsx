@@ -28,7 +28,15 @@ const ActionsContainer: React.FunctionComponent = () => {
         console.log("Sync recents");
     }
 
-    return <Actions event={ccEvent} onStartArchiverButtonClick={onStartArchiverButtonClick} onOptionsButtonClick={onOptionsButtonClick} onStartUploaderButtonClick={onStartUploaderButtonClick} onSyncRecentsButtonClick={onSyncRecentsButtonClick} />;
+    return (
+        <Actions
+            event={ccEvent}
+            onStartArchiverButtonClick={onStartArchiverButtonClick}
+            onOptionsButtonClick={onOptionsButtonClick}
+            onStartUploaderButtonClick={onStartUploaderButtonClick}
+            onSyncRecentsButtonClick={onSyncRecentsButtonClick}
+        />
+    );
 };
 
 export default ActionsContainer;

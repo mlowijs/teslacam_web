@@ -1,7 +1,13 @@
 import * as React from "react";
-import { Title } from "bloomer/lib/elements/Title";
+import { Title, HeroBody, Container, Hero } from "bloomer";
 
 const Header: React.FunctionComponent = () =>
-    <Title isSize={1}>TeslaCam Browser</Title>
+    <Hero isColor="primary">
+        <HeroBody>
+            <Container>
+                <Title>TeslaCam Browser</Title>
+            </Container>
+        </HeroBody>
+    </Hero>;
 
 export default Header;

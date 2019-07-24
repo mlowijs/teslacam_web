@@ -1,23 +1,24 @@
 import * as React from "react";
-import { Columns, Column, Box } from "bloomer";
 import ActionsContainer from "../containers/ActionsContainer";
-import { Title } from "bloomer/lib/elements/Title";
+import StatusContainer from "../containers/StatusContainer";
+import { Container, Tile, Section } from "bloomer";
 
 const IndexPage: React.FunctionComponent = () =>
-    <Columns>
-        <Column isSize="2/3">
-            <ActionsContainer />
-        </Column>
-        <Column>
-            <Box>
-                <Title size={4}>Status</Title>
-                <p>Last archive: 2019-07-23 18:54:00</p>
-                <p>Last upload: 2019-07-23 18:52:12</p>
-                <p>Disk: 24GB free, 40GB used, 64GB total</p>
-                <p>28GB in Saved Clips</p>
-                <p>12GB in Recent Clips</p>
-            </Box>
-        </Column>
-    </Columns>;
+    <Section>
+        <Container>
+            <Tile isAncestor>
+                <Tile isSize={6} isVertical isParent>
+                    <ActionsContainer />
+                    <Tile isChild>Saved</Tile>
+                    <Tile isChild>Recent</Tile>
+                </Tile>
+
+                <Tile isVertical isParent>
+                    <StatusContainer />
+                    <Tile isChild>Archive</Tile>
+                </Tile>
+            </Tile>
+        </Container>
+    </Section>;
 
 export default IndexPage;
