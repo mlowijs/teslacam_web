@@ -12,7 +12,11 @@ const ActionsContainer: React.FunctionComponent = () => {
         setCcEvent(evt);
     }, [ccEvent]);
 
-    return <Actions event={ccEvent} />;
+    const onButton1Click = () => {
+        console.log("clicked button 1");
+    }
+
+    return <Actions event={ccEvent} onButton1Click={onButton1Click} />;
 };
 
 export default ActionsContainer;
