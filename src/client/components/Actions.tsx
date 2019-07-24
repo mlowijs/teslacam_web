@@ -13,11 +13,11 @@ interface Props {
 }
 
 const Actions: React.FunctionComponent<Props> = (props) =>
-    <>
-        <Button className={styles.button} onClick={props.onSyncRecentsButtonClick}>Sync Recents</Button>
-        <Button className={styles.button} onClick={props.onStartArchiverButtonClick}>Start Archiver</Button>
-        <Button className={styles.button} onClick={props.onStartUploaderButtonClick}>Start Uploader</Button>
-        <Button className={styles.button} onClick={props.onOptionsButtonClick}>Options</Button>
-    </>;
+    <div className={styles.Actions}>
+        <Button onClick={props.onSyncRecentsButtonClick}>Sync Recents</Button>
+        <Button onClick={props.onStartArchiverButtonClick}>Start Archiver</Button>
+        <Button onClick={props.onStartUploaderButtonClick}>Start Uploader</Button>
+        <Button onClick={props.onOptionsButtonClick}>Options</Button>
+    </div>;
 
 export default Actions;
