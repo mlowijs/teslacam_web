@@ -1,11 +1,9 @@
-import moment, { Moment } from "moment";
 import * as fs from "fs";
 import * as rimraf from "rimraf";
 
 export interface FileSystemEntry {
     name: string;
     path: string;
-    date: Moment;
     size: number;
 }
 
@@ -19,7 +17,7 @@ export default class FileSystem {
             return {
                 name: f,
                 path: filePath,
-                date: moment(f.substr(0, 19), "YYYY-MM-DD_HH-mm-ss"),
+                // date: moment(f.substr(0, 19), "YYYY-MM-DD_HH-mm-ss"),
                 size: fs.statSync(filePath).size
             };
         });
