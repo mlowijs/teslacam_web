@@ -4,7 +4,7 @@ import { FileUploader } from "./FileUploader";
 import FileSystem from "./FileSystem";
 import LogFactory from "./LogFactory";
 import { EventEmitter } from "events";
-import { UPLOAD_STARTED, UPLOAD_COMPLETED } from "../../Constants";
+import { UPLOAD_STARTED, UPLOAD_COMPLETED, ARCHIVE_RECENT_FOLDER, ARCHIVE_SAVED_FOLDER } from "../../Constants";
 
 export default class Uploader extends EventEmitter {
     private readonly log: Logger;
@@ -26,7 +26,9 @@ export default class Uploader extends EventEmitter {
             log.info("Starting upload archived clips");
             this.emit(UPLOAD_STARTED);
 
-            const files = FileSystem.getFolderContents(config.archiveFolder);
+            const savedFiles = FileSystem.getFolderContents(`${config.archiveFolder}/${ARCHIVE_SAVED_FOLDER}`);
+            const recentFiles = FileSystem.getFolderContents(`${config.archiveFolder}/${ARCHIVE_RECENT_FOLDER}`);
+            const files = savedFiles.concat(recentFiles);
 
             if (files.length === 0)
                 log.info("No archived clips found");

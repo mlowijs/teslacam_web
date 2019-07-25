@@ -2,7 +2,7 @@ import System from "./System";
 import { Logger } from "pino";
 import { Configuration } from "../Configuration";
 import FileSystem, { FileSystemEntry } from "./FileSystem";
-import { TESLA_CAM, RECENT_CLIPS, SAVED_CLIPS, ONE_MEGABYTE, ARCHIVE_STARTED, ARCHIVE_COMPLETED } from "../../Constants";
+import { TESLA_CAM, RECENT_CLIPS, SAVED_CLIPS, ONE_MEGABYTE, ARCHIVE_STARTED, ARCHIVE_COMPLETED, ARCHIVE_SAVED_FOLDER, ARCHIVE_RECENT_FOLDER } from "../../Constants";
 import LogFactory from "./LogFactory";
 import { EventEmitter } from "events";
 
@@ -71,7 +71,7 @@ export default class Archiver extends EventEmitter {
             return;
         }
 
-        this.archiveClips(files);
+        this.archiveClips(ARCHIVE_RECENT_FOLDER, files);
     }
 
     private archiveSavedClips() {
@@ -117,12 +117,12 @@ export default class Archiver extends EventEmitter {
             return;
         }
 
-        this.archiveClips(files);
+        this.archiveClips(ARCHIVE_SAVED_FOLDER, files);
 
         FileSystem.deleteFolder(folder.path);
     }
 
-    private archiveClips(files: FileSystemEntry[]) {
+    private archiveClips(folder: string, files: FileSystemEntry[]) {
         const { log, config } = this;
 
         for (let i = 0; i < files.length; i++) {
@@ -131,7 +131,7 @@ export default class Archiver extends EventEmitter {
             log.info("Archiving clip '%s' (%d bytes) (%d/%d)", file.name, file.size, i + 1, files.length);
 
             if (file.size >= ONE_MEGABYTE)
-                FileSystem.copyFile(file, config.archiveFolder);
+                FileSystem.copyFile(file, `${config.archiveFolder}/${folder}`);
 
             FileSystem.deleteFile(file);
         }
