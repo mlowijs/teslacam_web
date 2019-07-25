@@ -3,7 +3,7 @@ port: 3000
 logLevel: "debug"
 
 usbMountFolder: "/mnt/usbfs"
-archiveFolder: "/Users/michiel/test"
+archiveFolder: "/cache"
 
 archiveRecent: false
 archiveSaved: false
