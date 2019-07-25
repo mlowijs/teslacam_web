@@ -6,15 +6,14 @@ import StateManager from "./services/StateManager";
 import LogFactory from "./services/LogFactory";
 import { Logger } from "pino";
 import * as path from "path";
-import socketio, { Socket } from "socket.io";
+import socketio from "socket.io";
 import * as http from "http";
 import Archiver from "./services/Archiver";
 import Uploader from "./services/Uploader";
 import {
     ARCHIVE_STARTED, ARCHIVE_COMPLETED, ARCHIVE_STARTS_AT,
-    UPLOAD_STARTED, UPLOAD_COMPLETED, UPLOAD_STARTS_AT, UPLOADING_FILE, CLIENT_CONNECTED
+    UPLOAD_STARTED, UPLOAD_COMPLETED, UPLOAD_STARTS_AT, UPLOADING_FILE,
  } from "../Constants";
-import { ClientConnectedEvent } from "../model/Events";
 
 export default class WebServer {
     private readonly log: Logger;
@@ -64,12 +63,8 @@ export default class WebServer {
     private setupSocketIo(httpServer: http.Server) {
         this.io = socketio(httpServer);
 
-        this.io.on("connection", (socket: Socket) => {
+        this.io.on("connection", () => {
             this.log.debug("Accepted new socket.io connection");
-
-            socket.emit(CLIENT_CONNECTED, new ClientConnectedEvent(
-                this.stateManager.nextArchiveAt, this.stateManager.nextUploadAt
-            ));
         });
 
         const emitter = (name: string) => (...args: any[]) => this.io.emit(name, args);

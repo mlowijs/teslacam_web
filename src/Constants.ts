@@ -15,4 +15,3 @@ export const UPLOAD_STARTS_AT = "uploadStartsAt";
 export const UPLOADING_FILE = "uploadingFile";
 export const FORCE_ARCHIVE = "forceArchive";
 export const FORCE_UPLOAD = "forceUpload";
-export const CLIENT_CONNECTED = "clientConnected";

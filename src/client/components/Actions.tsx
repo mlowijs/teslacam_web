@@ -1,10 +1,8 @@
 import * as styles from "./Actions.scss";
 import * as React from "react";
-import { ClientConnectedEvent } from "../../model/Events";
 import { Button, Title, Box } from "bloomer";
 
 interface Props {
-    event: ClientConnectedEvent;
     onSyncRecentsButtonClick: () => void;
     onStartArchiverButtonClick: () => void;
     onStartUploaderButtonClick: () => void;
