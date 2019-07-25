@@ -57,6 +57,11 @@ export default class Archiver extends EventEmitter {
 
         log.info("Archiving recent clips");
 
+        const folder = `${config.archiveFolder}/${ARCHIVE_RECENT_FOLDER}`;
+        
+        if (!FileSystem.exists(folder))
+            FileSystem.createFolder(folder);
+
         const recentClipsPath = `${config.usbMountFolder}/${TESLA_CAM}/${RECENT_CLIPS}`;
 
         if (!FileSystem.exists(recentClipsPath)) {
@@ -82,7 +87,12 @@ export default class Archiver extends EventEmitter {
             return;
         }
 
-        log.info("Archiving saved clips");        
+        log.info("Archiving saved clips");
+
+        const folder = `${config.archiveFolder}/${ARCHIVE_SAVED_FOLDER}`;
+        
+        if (!FileSystem.exists(folder))
+            FileSystem.createFolder(folder);
 
         const savedClipsPath = `${config.usbMountFolder}/${TESLA_CAM}/${SAVED_CLIPS}`;
 

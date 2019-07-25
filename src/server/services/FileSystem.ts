@@ -40,4 +40,8 @@ export default class FileSystem {
     public static copyFile(file: FileSystemEntry, destinationFolder: string) {
         fs.copyFileSync(file.path, `${destinationFolder}/${file.name}`);
     }
+
+    public static createFolder(path: string) {
+        fs.mkdirSync(path);
+    }
 }
