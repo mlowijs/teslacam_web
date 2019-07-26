@@ -8,7 +8,8 @@ export type Configuration = {
 
     port: number;
     logLevel: string;
-    usbMountFolder: string;
+    teslaCamFolder: string;
+    teslaCamFolderIsMount: boolean;
     archiveFolder: string;
     archiveRecent: boolean;
     archiveSaved: boolean;

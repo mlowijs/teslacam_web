@@ -25,10 +25,14 @@ export default class Archiver extends EventEmitter {
         log.info("Starting archive");
         this.emit(ARCHIVE_STARTED);
 
-        system.unmountDevices(config.usbMountFolder);
+        if(config.teslaCamFolderIsMount) {
+            system.unmountDevices(config.teslaCamFolder);
+        }
 
         try {
-            system.mountDevices(config.usbMountFolder);
+            if(config.teslaCamFolderIsMount) {
+                system.mountDevices(config.teslaCamFolder);
+            }
 
             this.archiveRecentClips();
             this.archiveSavedClips();
@@ -38,7 +42,9 @@ export default class Archiver extends EventEmitter {
             log.fatal(e.message);
         } finally {
             try {
-                system.unmountDevices(config.usbMountFolder);
+                if(config.teslaCamFolderIsMount) {
+                    system.unmountDevices(config.teslaCamFolder);
+                }
             } catch (e) {
                 log.error(e.message);
             }
@@ -66,7 +72,7 @@ export default class Archiver extends EventEmitter {
 
         this.createClipsFolder(ARCHIVE_RECENT_FOLDER);
 
-        const recentClipsPath = `${config.usbMountFolder}/${TESLA_CAM}/${RECENT_CLIPS}`;
+        const recentClipsPath = `${config.teslaCamFolder}/${TESLA_CAM}/${RECENT_CLIPS}`;
 
         if (!FileSystem.exists(recentClipsPath)) {
             log.info("No recent clips found");
@@ -96,7 +102,7 @@ export default class Archiver extends EventEmitter {
         this.createClipsFolder(ARCHIVE_SAVED_FOLDER);
 
 
-        const savedClipsPath = `${config.usbMountFolder}/${TESLA_CAM}/${SAVED_CLIPS}`;
+        const savedClipsPath = `${config.teslaCamFolder}/${TESLA_CAM}/${SAVED_CLIPS}`;
 
         if (!FileSystem.exists(savedClipsPath)) {
             log.info("No saved clips found");
