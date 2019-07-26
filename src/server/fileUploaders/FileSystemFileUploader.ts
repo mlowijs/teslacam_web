@@ -27,7 +27,7 @@ export default class FileSystemFileUploader extends EventEmitter implements File
         this.system = system;
     }
 
-    public uploadFiles(files: FileSystemEntry[]) {
+    public uploadFiles(archiveType: string, files: FileSystemEntry[]) {
         const { log, config, system } = this;
 
         try {
@@ -46,7 +46,7 @@ export default class FileSystemFileUploader extends EventEmitter implements File
                 ));
 
                 try {
-                    FileSystem.copyFile(file, config.path);
+                    FileSystem.copyFile(file, `${config.path}/${archiveType}`);
                     FileSystem.deleteFile(file);
                 } catch (e) {
                     log.error("Failed to copy file '%s'", file.name);

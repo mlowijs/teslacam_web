@@ -7,3 +7,9 @@ export const get = async <TResponse>(path: string): Promise<TResponse> => {
 
     return await response.json() as TResponse;
 };
+
+export const post = async (path: string): Promise<void> => {
+    await fetch(`${baseUri}/${path}`, {
+        method: "post"
+    });
+};

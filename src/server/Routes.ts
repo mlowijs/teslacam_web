@@ -4,6 +4,7 @@ import { FilesType } from "../model/Enums";
 import FileSystem, { FileSystemEntry } from "./services/FileSystem";
 import { ARCHIVE_SAVED_FOLDER, ARCHIVE_RECENT_FOLDER } from "../Constants";
 import { ApiFileSystemEntry } from "../model/Models";
+import StateManager from "./services/StateManager";
 
 export const index = (_: Request, res: Response) => {
     res.redirect("/index.html");
@@ -44,3 +45,11 @@ export const listFiles = (config: Configuration) => (req: Request, res: Response
         size: f.size
     })));
 }
+
+export const forceArchive = (stateManager: StateManager) => () => {
+    stateManager.forceArchive();
+};
+
+export const forceUpload = (stateManager: StateManager) => () => {
+    stateManager.forceUpload();
+};

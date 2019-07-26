@@ -1,6 +1,6 @@
 import { Configuration } from "./Configuration";
 import express, { Request, Response, NextFunction } from "express";
-import { index, downloadFile, listFiles } from "./Routes";
+import { index, downloadFile, listFiles, forceArchive, forceUpload } from "./Routes";
 import * as core from "express-serve-static-core";
 import StateManager from "./services/StateManager";
 import LogFactory from "./services/LogFactory";
@@ -59,6 +59,8 @@ export default class WebServer {
         this.app.get("/", index);
         this.app.get("/download/:file", downloadFile(config));
         this.app.get("/files/:filesType", listFiles(config));
+        this.app.post("/actions/forceArchive", forceArchive(this.stateManager));
+        this.app.post("/actions/forceUpload", forceUpload(this.stateManager));
     }
 
     private setupSocketIo(httpServer: http.Server) {

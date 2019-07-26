@@ -3,7 +3,7 @@ port: 3000
 logLevel: "debug"
 
 teslaCamFolder: "/mnt/usbfs"
-teslaCamFolderIsMount: true
+teslaCamFolderIsMount: false
 archiveFolder: "/cache"
 
 archiveRecent: false
@@ -13,4 +13,4 @@ uploadInterval: 300
 
 fileSystemFileUploader:
   path: "/mnt/nfs"
-  requiresMount: true
+  requiresMount: false

@@ -1,9 +1,11 @@
 import * as React from "react";
-import Actions from "../components/Actions";
+import ActionsComponent from "../components/Actions";
+import * as ActionsApi from "../api/Actions";
 
 const ActionsContainer: React.FunctionComponent = () => {
     const onStartArchiverButtonClick = () => {
-        console.log("Start Archiving");
+        console.log("Forcing archive");
+        ActionsApi.forceArchive();
     }
 
     const onOptionsButtonClick = () => {
@@ -11,7 +13,8 @@ const ActionsContainer: React.FunctionComponent = () => {
     }
 
     const onStartUploaderButtonClick = () => {
-        console.log("Start uploader");
+        console.log("Forcing upload");
+        ActionsApi.forceArchive();
     }
 
     const onSyncRecentsButtonClick = () => {
@@ -19,7 +22,7 @@ const ActionsContainer: React.FunctionComponent = () => {
     }
 
     return (
-        <Actions
+        <ActionsComponent
             onStartArchiverButtonClick={onStartArchiverButtonClick}
             onOptionsButtonClick={onOptionsButtonClick}
             onStartUploaderButtonClick={onStartUploaderButtonClick}

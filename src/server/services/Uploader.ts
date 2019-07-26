@@ -1,7 +1,7 @@
 import { Logger } from "pino";
 import { Configuration } from "../Configuration";
 import { FileUploader } from "./FileUploader";
-import FileSystem from "./FileSystem";
+import FileSystem, { FileSystemEntry } from "./FileSystem";
 import LogFactory from "./LogFactory";
 import { EventEmitter } from "events";
 import { UPLOAD_STARTED, UPLOAD_COMPLETED, ARCHIVE_RECENT_FOLDER, ARCHIVE_SAVED_FOLDER } from "../../Constants";
@@ -19,23 +19,37 @@ export default class Uploader extends EventEmitter {
         this.fileUploader = fileUploader;
     }
 
+    public uploadRecentClips() {
+        const { config } = this;
+        const recentFiles = FileSystem.getFolderContents(`${config.archiveFolder}/${ARCHIVE_RECENT_FOLDER}`);
+        this.uploadFiles(ARCHIVE_RECENT_FOLDER,recentFiles);
+    }
+
+    public uploadSavedClips() {
+        const { config } = this;
+        const savedFiles = FileSystem.getFolderContents(`${config.archiveFolder}/${ARCHIVE_SAVED_FOLDER}`);
+        this.uploadFiles(ARCHIVE_SAVED_FOLDER, savedFiles);
+    }
+
     public upload() {
-        const { log, fileUploader, config } = this;
+        this.uploadSavedClips();
+        this.uploadRecentClips();
+    }
+
+    private uploadFiles(archiveType: string, files : FileSystemEntry[])
+    {
+        const { log, fileUploader } = this;
 
         try {
-            log.info("Starting upload archived clips");
+            log.info(`Starting upload of folder ${archiveType}`);
             this.emit(UPLOAD_STARTED);
 
-            const savedFiles = FileSystem.getFolderContents(`${config.archiveFolder}/${ARCHIVE_SAVED_FOLDER}`);
-            const recentFiles = FileSystem.getFolderContents(`${config.archiveFolder}/${ARCHIVE_RECENT_FOLDER}`);
-            const files = savedFiles.concat(recentFiles);
-
             if (files.length === 0)
-                log.info("No archived clips found");
+                log.info(`No files found for folder ${archiveType}`);
             else
-                fileUploader.uploadFiles(files);
+                fileUploader.uploadFiles(archiveType, files);
 
-            log.info("Upload archived clips completed");
+            log.info(`Finished upload of folder ${archiveType}`);
         } catch (e) {
             log.fatal(e.message);
         } finally {
