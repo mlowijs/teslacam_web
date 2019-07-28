@@ -1,4 +1,4 @@
-import * as styles from "./Actions.scss";
+import * as styles from "./Actions.module.css";
 import * as React from "react";
 import { Button, Title, Box } from "bloomer";
 

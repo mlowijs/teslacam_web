@@ -34,14 +34,14 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /\.css/,
+                test: /\.min\.css/,
                 use: [
                     MiniCssExtractPlugin.loader,
                     "css-loader"
                 ]
             },
             {
-                test: /\.s[ac]ss$/,
+                test: /\.module\.css$/,
                 use: [
                     MiniCssExtractPlugin.loader,
                     "css-modules-typescript-loader",
@@ -51,8 +51,7 @@ module.exports = {
                             sourceMap: !isProduction,
                             modules: true
                         }
-                    },
-                    "sass-loader"
+                    }
                 ]
             },
             {
