@@ -9,7 +9,7 @@
     "build:client": "webpack --config webpack.client.js --progress",
     "build:server": "webpack --config webpack.server.js --progress",
     "start": "run-p start:** watch:server",
-    "start:client": "webpack-dev-server --config webpack.client.js",
+    "start:client": "webpack-dev-server --config webpack.client.js --host 0.0.0.0",
     "start:server": "webpack --config webpack.server.js --watch",
     "watch:server": "nodemon dist/main.js"
   },

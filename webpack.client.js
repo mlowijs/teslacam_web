@@ -14,7 +14,7 @@ const dotenv = new Dotenv({
 });
 
 const extractText = new MiniCssExtractPlugin({
-    filename: "static/[name].bundle.css"
+    filename: "[name].bundle.css"
 });
 
 module.exports = {

@@ -11,7 +11,7 @@ interface Props {
 
 const Actions: React.FunctionComponent<Props> = (props) =>
     <Box className={styles.Actions}>
-        <Title isSize={4}>Actions</Title>
+        <Title className="is-size-3-touch">Actions</Title>
 
         <Button onClick={props.onSyncRecentsButtonClick}>Sync Recents</Button>
         <Button onClick={props.onStartArchiverButtonClick}>Start Archiver</Button>

@@ -8,7 +8,7 @@ interface Props {
 const Files: React.FunctionComponent<Props> = (props) =>
     <Tile isChild render={(tileProps: any) =>
         <Box {...tileProps}>
-            <Title isSize={4}>{props.title}</Title>
+            <Title className="is-size-3-touch">{props.title}</Title>
         </Box>
     } />
 

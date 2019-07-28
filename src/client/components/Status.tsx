@@ -3,7 +3,7 @@ import { Title, Box } from "bloomer";
 
 const Status: React.FunctionComponent = () =>
     <Box>
-        <Title isSize={4}>Status</Title>
+        <Title className="is-size-2-touch">Status</Title>
 
         <p>Last archive: 2019-07-23 18:54:00</p>
         <p>Last upload: 2019-07-23 18:52:12</p>

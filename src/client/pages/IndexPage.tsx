@@ -6,9 +6,9 @@ import FilesContainer from "../containers/FilesContainer";
 import { FilesType } from "../../model/Enums";
 
 const IndexPage: React.FunctionComponent = () =>
-    <Section>
+    <Section className="is-size-3-touch">
         <Container>
-            <Columns>
+            <Columns isDesktop>
                 <Column>
                     <StatusContainer />
                 </Column>
