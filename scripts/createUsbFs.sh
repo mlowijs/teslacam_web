@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# TODO Fix root mount pount
+# Fix root mount pount
 echo "/dev/mmcblk0p2 / ext4 defaults,rw,noatime 0 1" >> /etc/fstab
 
 # Update and install some packages
