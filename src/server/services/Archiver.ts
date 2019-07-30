@@ -143,15 +143,24 @@ export default class Archiver extends EventEmitter {
         // Sort files by date in reverse, so that we archive the newest clips first
         const sortedFiles = [...files].sort((a, b) => b.date.valueOf() - a.date.valueOf());
 
-        for (let i = 0; i < sortedFiles.length; i++) {
-            const file = sortedFiles[i];
+        for (let i = 0; i < sortedFiles.length; i++)
+        {
+            try 
+            {
+                const file = sortedFiles[i];
 
-            log.info("Archiving clip '%s' (%d bytes) (%d/%d)", file.name, file.size, i + 1, sortedFiles.length);
+                log.info("Archiving clip '%s' (%d bytes) (%d/%d)", file.name, file.size, i + 1, sortedFiles.length);
 
-            if (file.size >= ONE_MEGABYTE)
-                FileSystem.copyFile(file, `${config.archiveFolder}/${folder}`);
+                if (file.size >= ONE_MEGABYTE)
+                    FileSystem.copyFile(file, `${config.archiveFolder}/${folder}`);
 
-            FileSystem.deleteFile(file);
+                FileSystem.deleteFile(file);
+            }
+            catch (e) 
+            {
+                log.error(e.message);
+                log.error(e);
+            }
         }
     }
 }
