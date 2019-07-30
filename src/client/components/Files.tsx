@@ -1,5 +1,7 @@
+import * as styles from "../index.scss";
 import * as React from "react";
 import { ApiFileSystemEntry } from "../../model/Models";
+import classNames from "classnames";
 
 interface Props {
     title: string;
@@ -7,10 +9,10 @@ interface Props {
 }
 
 const Files: React.FunctionComponent<Props> = (props) =>
-    <div className="tile is-child box">
-        <div className="title is-size-3-touch">{props.title}</div>
+    <div className={classNames(styles.tile, styles.isChild, styles.box)}>
+        <div className={classNames(styles.title, styles.isSize2Touch)}>{props.title}</div>
 
-        <table className="table">
+        <table className={styles.table}>
             <thead>
                 <tr>
                     <th>Name</th>

@@ -1,4 +1,6 @@
+import * as styles from "./Actions.scss";
 import * as React from "react";
+import classNames from "classnames";
 
 interface Props {
     onSyncRecentsButtonClick: () => void;
@@ -8,13 +10,13 @@ interface Props {
 }
 
 const Actions: React.FunctionComponent<Props> = (props) =>
-    <div className="box">
-        <div className="title is-size-2-touch">Actions</div>
+    <div className={classNames(styles.box, styles.Actions)}>
+        <div className={classNames(styles.title, styles.isSize2Touch)}>Actions</div>
 
-        <div className="button is-size-2-touch" onClick={props.onSyncRecentsButtonClick}>Sync Recents</div>
-        <div className="button is-size-2-touch" onClick={props.onStartArchiverButtonClick}>Start Archiver</div>
-        <div className="button is-size-2-touch" onClick={props.onStartUploaderButtonClick}>Start Uploader</div>
-        <div className="button is-size-2-touch" onClick={props.onOptionsButtonClick}>Options</div>
+        <button className={classNames(styles.button, styles.isSize2Touch)} onClick={props.onSyncRecentsButtonClick}>Sync Recents</button>
+        <button className={classNames(styles.button, styles.isSize2Touch)} onClick={props.onStartArchiverButtonClick}>Start Archiver</button>
+        <button className={classNames(styles.button, styles.isSize2Touch)} onClick={props.onStartUploaderButtonClick}>Start Uploader</button>
+        <button className={classNames(styles.button, styles.isSize2Touch)} onClick={props.onOptionsButtonClick}>Options</button>
     </div>;
 
 export default Actions;

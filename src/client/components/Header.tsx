@@ -1,10 +1,13 @@
+import * as styles from "../index.scss";
+
 import * as React from "react";
+import classNames from "classnames";
 
 const Header: React.FunctionComponent = () =>
-    <div className="hero is-primary">
-        <div className="hero-body">
-            <div className="container">
-                <div className="title">TeslaCam Browser</div>
+    <div className={classNames(styles.hero, styles.isPrimary)}>
+        <div className={styles.heroBody}>
+            <div className={styles.container}>
+                <div className={styles.title}>TeslaCam Browser</div>
             </div>
         </div>
     </div>;

@@ -1,28 +1,30 @@
+import * as styles from "../index.scss";
 import * as React from "react";
 import ActionsContainer from "../containers/ActionsContainer";
 import StatusContainer from "../containers/StatusContainer";
 import FilesContainer from "../containers/FilesContainer";
 import { FilesType } from "../../model/Enums";
+import classNames from "classnames";
 
 const IndexPage: React.FunctionComponent = () =>
-    <div className="section is-size-3-touch">
-        <div className="container">
-            <div className="columns is-desktop">
-                <div className="column">
+    <div className={classNames(styles.section, styles.isSize3Touch)}>
+        <div className={styles.container}>
+            <div className={classNames(styles.columns, styles.isDesktop)}>
+                <div className={styles.column}>
                     <StatusContainer />
                 </div>
-                <div className="column">
+                <div className={styles.column}>
                     <ActionsContainer />
                 </div>
             </div>
             
-            <div className="tile is-ancestor">
-                <div className="tile is-size-6 is-vertical is-parent">
+            <div className={classNames(styles.tile, styles.isAncestor)}>
+                <div className={classNames(styles.tile, styles.isSize6, styles.isVertical, styles.isParent)}>
                     <FilesContainer filesType={FilesType.SAVED} title="Saved" />
                     <FilesContainer filesType={FilesType.RECENT} title="Recent" />
                 </div>
 
-                <div className="tile is-vertical is-parent">
+                <div className={classNames(styles.tile, styles.isVertical, styles.isParent)}>
                     <FilesContainer filesType={FilesType.ARCHIVE} title="Archive" />
                 </div>
             </div>
