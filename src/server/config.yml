@@ -11,7 +11,7 @@ archiveSaved: false
 archiveInterval: 60
 uploadInterval: 60
 
-uploader: "blob" # "blob", "fileSystem"
+uploader: "blobStorage" # "blobStorage", "fileSystem"
 
 fileSystemFileUploader:
   path: "/mnt/nfs"

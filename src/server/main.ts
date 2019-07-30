@@ -24,7 +24,7 @@ webServer.start(config);
 
 function getFileUploader(): FileUploader {
     switch (config.uploader) {
-        case "blob":
+        case "blobStorage":
             return new BlobStorageFileUploader(logFactory, config);
 
         case "fileSystem":
