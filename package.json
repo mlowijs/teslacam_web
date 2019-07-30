@@ -16,7 +16,6 @@
   "author": "Michiel Lowijs",
   "license": "ISC",
   "dependencies": {
-    "bloomer": "^0.6.5",
     "bulma": "^0.7.5",
     "cors": "^2.8.5",
     "express": "^4.17.1",

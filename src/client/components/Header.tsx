@@ -1,13 +1,12 @@
 import * as React from "react";
-import { Title, HeroBody, Container, Hero } from "bloomer";
 
 const Header: React.FunctionComponent = () =>
-    <Hero isColor="primary">
-        <HeroBody>
-            <Container>
-                <Title>TeslaCam Browser</Title>
-            </Container>
-        </HeroBody>
-    </Hero>;
+    <div className="hero is-primary">
+        <div className="hero-body">
+            <div className="container">
+                <div className="title">TeslaCam Browser</div>
+            </div>
+        </div>
+    </div>;
 
 export default Header;

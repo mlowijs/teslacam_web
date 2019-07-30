@@ -1,33 +1,32 @@
 import * as React from "react";
 import ActionsContainer from "../containers/ActionsContainer";
 import StatusContainer from "../containers/StatusContainer";
-import { Container, Tile, Section, Columns, Column } from "bloomer";
 import FilesContainer from "../containers/FilesContainer";
 import { FilesType } from "../../model/Enums";
 
 const IndexPage: React.FunctionComponent = () =>
-    <Section className="is-size-3-touch">
-        <Container>
-            <Columns isDesktop>
-                <Column>
+    <div className="section is-size-3-touch">
+        <div className="container">
+            <div className="columns is-desktop">
+                <div className="column">
                     <StatusContainer />
-                </Column>
-                <Column>
+                </div>
+                <div className="column">
                     <ActionsContainer />
-                </Column>
-            </Columns>
+                </div>
+            </div>
             
-            <Tile isAncestor>
-                <Tile isSize={6} isVertical isParent>
+            <div className="tile is-ancestor">
+                <div className="tile is-size-6 is-vertical is-parent">
                     <FilesContainer filesType={FilesType.SAVED} title="Saved" />
                     <FilesContainer filesType={FilesType.RECENT} title="Recent" />
-                </Tile>
+                </div>
 
-                <Tile isVertical isParent>
+                <div className="tile is-vertical is-parent">
                     <FilesContainer filesType={FilesType.ARCHIVE} title="Archive" />
-                </Tile>
-            </Tile>
-        </Container>
-    </Section>;
+                </div>
+            </div>
+        </div>
+    </div>;
 
 export default IndexPage;

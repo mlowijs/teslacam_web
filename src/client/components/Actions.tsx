@@ -1,6 +1,4 @@
-import * as styles from "./Actions.module.css";
 import * as React from "react";
-import { Button, Title, Box } from "bloomer";
 
 interface Props {
     onSyncRecentsButtonClick: () => void;
@@ -10,13 +8,13 @@ interface Props {
 }
 
 const Actions: React.FunctionComponent<Props> = (props) =>
-    <Box className={styles.Actions}>
-        <Title className="is-size-2-touch">Actions</Title>
+    <div className="box">
+        <div className="title is-size-2-touch">Actions</div>
 
-        <Button className="is-size-2-touch" onClick={props.onSyncRecentsButtonClick}>Sync Recents</Button>
-        <Button className="is-size-2-touch" onClick={props.onStartArchiverButtonClick}>Start Archiver</Button>
-        <Button className="is-size-2-touch" onClick={props.onStartUploaderButtonClick}>Start Uploader</Button>
-        <Button className="is-size-2-touch" onClick={props.onOptionsButtonClick}>Options</Button>
-    </Box>;
+        <div className="button is-size-2-touch" onClick={props.onSyncRecentsButtonClick}>Sync Recents</div>
+        <div className="button is-size-2-touch" onClick={props.onStartArchiverButtonClick}>Start Archiver</div>
+        <div className="button is-size-2-touch" onClick={props.onStartUploaderButtonClick}>Start Uploader</div>
+        <div className="button is-size-2-touch" onClick={props.onOptionsButtonClick}>Options</div>
+    </div>;
 
 export default Actions;
