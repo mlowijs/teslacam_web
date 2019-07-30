@@ -5,7 +5,7 @@ Description=TeslaCam
 User=michiel
 Type=simple
 WorkingDirectory=/opt/teslacam
-ExecStart=node main.js
+ExecStart=/usr/bin/node main.js
 
 [Install]
 WantedBy=multi-user.target

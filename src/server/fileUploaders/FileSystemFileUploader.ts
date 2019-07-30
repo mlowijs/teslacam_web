@@ -1,4 +1,4 @@
-import { FileUploader } from "../services/FileUploader";
+import FileUploader from "../services/FileUploader";
 import { Configuration } from "../Configuration";
 import FileSystem from "../services/FileSystem";
 import { FileSystemEntry } from "../services/FileSystem";

@@ -1,5 +1,5 @@
 import { FileSystemEntry } from "./FileSystem";
 
-export interface FileUploader {
+export default interface FileUploader {
     uploadFiles: (archiveType: string, files: FileSystemEntry[]) => void;
 }

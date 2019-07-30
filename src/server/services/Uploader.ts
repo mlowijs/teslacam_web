@@ -1,6 +1,6 @@
 import { Logger } from "pino";
 import { Configuration } from "../Configuration";
-import { FileUploader } from "./FileUploader";
+import FileUploader from "./FileUploader";
 import FileSystem, { FileSystemEntry } from "./FileSystem";
 import LogFactory from "./LogFactory";
 import { EventEmitter } from "events";
