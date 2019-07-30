@@ -11,11 +11,13 @@ archiveSaved: false
 archiveInterval: 60
 uploadInterval: 60
 
+uploader: "blob" # "blob", "fileSystem"
+
 fileSystemFileUploader:
   path: "/mnt/nfs"
   requiresMount: false
 
 blobStorageFileUploader:
-  accountName: mlcloudshell
-  accountKey: GTtwDUEUP/KA7XJAyOPCs8R/h+qoLr88U38xIka0hVsyN3nKb2Ydf5///KEz2pjLqSocGEa7o84d6RhfbPXuuw==
-  containerName: teslacam
+  accountName: "mlcloudshell"
+  accountKey: "GTtwDUEUP/KA7XJAyOPCs8R/h+qoLr88U38xIka0hVsyN3nKb2Ydf5///KEz2pjLqSocGEa7o84d6RhfbPXuuw=="
+  containerName: "teslacam"

@@ -15,6 +15,7 @@ export type Configuration = {
     archiveSaved: boolean;
     archiveInterval: number;
     uploadInterval: number;
+    uploader: "blob" | "fileSystem";
 }
 
 export function getConfiguration() {
