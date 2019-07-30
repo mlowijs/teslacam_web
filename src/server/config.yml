@@ -4,12 +4,12 @@ logLevel: "debug"
 
 teslaCamFolder: "/mnt/usbfs"
 mountTeslaCamFolder: true
-archiveFolder: "/archive"
 
+archiveFolder: "/archive"
 archiveRecent: false
 archiveSaved: false
-archiveInterval: 900
-uploadInterval: 300
+archiveInterval: 60
+uploadInterval: 60
 
 fileSystemFileUploader:
   path: "/mnt/nfs"

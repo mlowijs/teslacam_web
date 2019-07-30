@@ -31,8 +31,7 @@ export default class BlobStorageFileUploader extends EventEmitter implements Fil
         const serviceClient = new BlobServiceClient(
             `https://${config.accountName}.blob.core.windows.net`, credential);
 
-        const createContainerResult = await serviceClient.createContainer(config.containerName);
-        this.containerClient = createContainerResult.containerClient;
+        this.containerClient = serviceClient.getContainerClient(config.containerName);
     }
 
     public async uploadFiles(archiveType: string, files: FileSystemEntry[]): Promise<void> {

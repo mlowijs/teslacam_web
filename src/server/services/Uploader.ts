@@ -19,24 +19,36 @@ export default class Uploader extends EventEmitter {
         this.fileUploader = fileUploader;
     }
 
-    public uploadRecentClips() {
+    public async upload() {
+        await this.uploadSavedClips();
+        await this.uploadRecentClips();
+    }
+
+    private async uploadRecentClips() {
         const { config } = this;
-        const recentFiles = FileSystem.getFolderContents(`${config.archiveFolder}/${ARCHIVE_RECENT_FOLDER}`);
-        this.uploadFiles(ARCHIVE_RECENT_FOLDER,recentFiles);
+
+        const path = `${config.archiveFolder}/${ARCHIVE_RECENT_FOLDER}`;
+
+        if (!FileSystem.exists(path))
+            return;
+
+        const recentFiles = FileSystem.getFolderContents(path);
+        await this.uploadFiles(ARCHIVE_RECENT_FOLDER, recentFiles);
     }
 
-    public uploadSavedClips() {
+    private async uploadSavedClips() {
         const { config } = this;
-        const savedFiles = FileSystem.getFolderContents(`${config.archiveFolder}/${ARCHIVE_SAVED_FOLDER}`);
-        this.uploadFiles(ARCHIVE_SAVED_FOLDER, savedFiles);
+
+        const path = `${config.archiveFolder}/${ARCHIVE_SAVED_FOLDER}`;
+
+        if (!FileSystem.exists(path))
+            return;
+
+        const savedFiles = FileSystem.getFolderContents(path);
+        await this.uploadFiles(ARCHIVE_SAVED_FOLDER, savedFiles);
     }
 
-    public upload() {
-        this.uploadSavedClips();
-        this.uploadRecentClips();
-    }
-
-    private uploadFiles(archiveType: string, files : FileSystemEntry[])
+    private async uploadFiles(archiveType: string, files: FileSystemEntry[])
     {
         const { log, fileUploader } = this;
 
@@ -47,7 +59,7 @@ export default class Uploader extends EventEmitter {
             if (files.length === 0)
                 log.info(`No files found for folder ${archiveType}`);
             else
-                fileUploader.uploadFiles(archiveType, files);
+                await fileUploader.uploadFiles(archiveType, files);
 
             log.info(`Finished upload of folder ${archiveType}`);
         } catch (e) {

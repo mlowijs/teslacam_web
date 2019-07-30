@@ -85,7 +85,7 @@ export default class StateManager extends EventEmitter {
             const isNetworkOnline = await isOnline();
 
             if (isNetworkOnline)
-                this.uploader.upload();
+                await this.uploader.upload();
             else
                 this.log.debug("Upload canceled, network is offline");                
             
