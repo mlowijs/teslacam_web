@@ -9,7 +9,7 @@ export type Configuration = {
     port: number;
     logLevel: string;
     teslaCamFolder: string;
-    teslaCamFolderIsMount: boolean;
+    mountTeslaCamFolder: boolean;
     archiveFolder: string;
     archiveRecent: boolean;
     archiveSaved: boolean;

@@ -25,14 +25,12 @@ export default class Archiver extends EventEmitter {
         log.info("Starting archive");
         this.emit(ARCHIVE_STARTED);
 
-        if(config.teslaCamFolderIsMount) {
+        if (config.mountTeslaCamFolder)
             system.unmountDevices(config.teslaCamFolder);
-        }
 
         try {
-            if(config.teslaCamFolderIsMount) {
+            if (config.mountTeslaCamFolder)
                 system.mountDevices(config.teslaCamFolder);
-            }
 
             this.archiveRecentClips();
             this.archiveSavedClips();
@@ -42,9 +40,8 @@ export default class Archiver extends EventEmitter {
             log.fatal(e.message);
         } finally {
             try {
-                if(config.teslaCamFolderIsMount) {
+                if (config.mountTeslaCamFolder)
                     system.unmountDevices(config.teslaCamFolder);
-                }
             } catch (e) {
                 log.error(e.message);
             }

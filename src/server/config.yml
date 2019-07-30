@@ -3,8 +3,8 @@ port: 3000
 logLevel: "debug"
 
 teslaCamFolder: "/mnt/usbfs"
-teslaCamFolderIsMount: false
-archiveFolder: "/Users/michiel/test"
+mountTeslaCamFolder: true
+archiveFolder: "/archive"
 
 archiveRecent: false
 archiveSaved: false
