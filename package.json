@@ -5,7 +5,7 @@
   "main": "dist/main.js",
   "ts:main": "src/server/main.ts",
   "scripts": {
-    "build": "rimraf dist && run-s build:**",
+    "build": "rimraf dist && cross-env NODE_ENV=production && run-s build:**",
     "build:client": "webpack --config webpack.client.js --progress",
     "build:server": "webpack --config webpack.server.js --progress",
     "start": "run-p start:** watch:server",
@@ -42,6 +42,7 @@
     "@types/yaml": "^1.0.2",
     "awesome-typescript-loader": "^5.2.1",
     "copy-webpack-plugin": "^5.0.3",
+    "cross-env": "^5.2.0",
     "css-loader": "^3.1.0",
     "css-modules-typescript-loader": "^2.0.4",
     "dotenv-webpack": "^1.7.0",
