@@ -27,7 +27,7 @@ export default class FileSystemFileUploader extends EventEmitter implements File
         this.system = system;
     }
 
-    public uploadFiles(archiveType: string, files: FileSystemEntry[]) {
+    public async uploadFiles(archiveType: string, files: FileSystemEntry[]): Promise<void> {
         const { log, config, system } = this;
 
         try {
@@ -54,7 +54,7 @@ export default class FileSystemFileUploader extends EventEmitter implements File
                     FileSystem.copyFile(file, folder);
                     FileSystem.deleteFile(file);
                 } catch (e) {
-                    log.error("Failed to copy file '%s'", file.name);
+                    log.error("Failed to upload file '%s'", file.name);
                     log.error(e);
                 }
             }
