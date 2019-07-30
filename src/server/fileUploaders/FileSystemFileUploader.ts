@@ -55,6 +55,7 @@ export default class FileSystemFileUploader extends EventEmitter implements File
                     FileSystem.deleteFile(file);
                 } catch (e) {
                     log.error("Failed to copy file '%s'", file.name);
+                    log.error(e);
                 }
             }
         } catch (e) {
