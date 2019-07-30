@@ -14,6 +14,7 @@ import {
     ARCHIVE_STARTED, ARCHIVE_COMPLETED, ARCHIVE_STARTS_AT,
     UPLOAD_STARTED, UPLOAD_COMPLETED, UPLOAD_STARTS_AT, UPLOADING_FILE,
  } from "../Constants";
+ import cors from "cors";
 
 export default class WebServer {
     private readonly log: Logger;
@@ -36,6 +37,10 @@ export default class WebServer {
         this.app = express();
         this.server = http.createServer(this.app);
         this.setupSocketIo(this.server);
+
+        this.app.use(cors({
+            allowedHeaders: "*"
+        }));
 
         this.app.use((_: Request, res: Response, next: NextFunction) => {
             res.setHeader("Cache-Control", "no-cache");

@@ -2,7 +2,6 @@ import { Request, Response } from "express";
 import { Configuration } from "./Configuration";
 import { FilesType } from "../model/Enums";
 import FileSystem, { FileSystemEntry } from "./services/FileSystem";
-import { ARCHIVE_SAVED_FOLDER, ARCHIVE_RECENT_FOLDER } from "../Constants";
 import { ApiFileSystemEntry } from "../model/Models";
 import StateManager from "./services/StateManager";
 
@@ -31,17 +30,17 @@ export const listFiles = (config: Configuration) => (req: Request, res: Response
     let files: FileSystemEntry[] = [];
 
     switch (filesType) {
-        case FilesType.SAVED:
-            files = FileSystem.getFolderContents(`${config.archiveFolder}/${ARCHIVE_SAVED_FOLDER}`);
+        case FilesType.ARCHIVE:
+            files = FileSystem.getFolderContents(`${config.archiveFolder}`);
             break;
         
-        case FilesType.RECENT:
-            files = FileSystem.getFolderContents(`${config.archiveFolder}/${ARCHIVE_RECENT_FOLDER}`);
+        default:
             break;
     }
 
     res.json(files.map<ApiFileSystemEntry>(f => ({
         name: f.name,
+        date: f.date.toISOString(),
         size: f.size
     })));
 }

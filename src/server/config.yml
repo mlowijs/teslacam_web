@@ -4,7 +4,7 @@ logLevel: "debug"
 
 teslaCamFolder: "/mnt/usbfs"
 teslaCamFolderIsMount: false
-archiveFolder: "/archive"
+archiveFolder: "/Users/michiel/test"
 
 archiveRecent: false
 archiveSaved: false
