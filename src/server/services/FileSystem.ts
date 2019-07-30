@@ -7,20 +7,33 @@ export interface FileSystemEntry {
     path: string;
     date: Moment;
     size: number;
+    type: string;
 }
+
+const fileTypes = ["front", "left_repeater", "right_repeater"];
+
+const getFileType = (name: string): string => {
+    for (const fileType of fileTypes) {
+        if (name.includes(fileType))
+            return fileType;
+    }
+
+    return null;
+};
 
 export default class FileSystem {
     public static getFolderContents(path: string): FileSystemEntry[] {
         const entries = fs.readdirSync(path);
-    
+
         return entries.map(f => {
             const filePath = `${path}/${f}`;
-    
+
             return {
                 name: f,
                 path: filePath,
                 date: moment(f.substr(0, 19), "YYYY-MM-DD_HH-mm-ss"),
-                size: fs.statSync(filePath).size
+                size: fs.statSync(filePath).size,
+                type: getFileType(f)
             };
         });
     }

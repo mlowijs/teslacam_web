@@ -12,8 +12,6 @@ export const index = (_: Request, res: Response) => {
 export const downloadFile = (config: Configuration) => (req: Request, res: Response) => {
     const file = req.params.file;
 
-    console.log(file);
-
     const options = {
         root: config.archiveFolder,
         headers: {
@@ -41,7 +39,8 @@ export const listFiles = (config: Configuration) => (req: Request, res: Response
     res.json(files.map<ApiFileSystemEntry>(f => ({
         name: f.name,
         date: f.date.toISOString(),
-        size: f.size
+        size: f.size,
+        type: f.type
     })));
 }
 

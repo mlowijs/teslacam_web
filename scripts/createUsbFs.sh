@@ -19,6 +19,21 @@ echo "::1 localhost teslacam" >> /etc/hosts
 # Setup sudo
 echo "%wheel ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers
 
+# Resize root partition
+fdisk /dev/mmcblk0 <<EOF
+d
+2
+n
+p
+2
+
+
+n
+w
+EOF
+
+resize2fs /dev/mmcblk0p2
+
 # Setup USB filesystem
 fallocate -l 6G /usbfs
 

@@ -19,12 +19,12 @@ const IndexPage: React.FunctionComponent = () =>
             </div>
             
             <div className={classNames(styles.tile, styles.isAncestor)}>
-                <div className={classNames(styles.tile, styles.isSize6, styles.isVertical, styles.isParent)}>
+                <div className={classNames(styles.tile, styles.isVertical, styles.isParent)}>
                     <FilesContainer filesType={FilesType.SAVED} title="Saved" />
                     <FilesContainer filesType={FilesType.RECENT} title="Recent" />
                 </div>
 
-                <div className={classNames(styles.tile, styles.isVertical, styles.isParent)}>
+                <div className={classNames(styles.tile, styles.isParent)}>
                     <FilesContainer filesType={FilesType.ARCHIVE} title="Archive" />
                 </div>
             </div>
