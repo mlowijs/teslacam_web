@@ -14,7 +14,7 @@ const Video: React.FunctionComponent<Props> = ({ path, onCloseClick }) =>
         <div className={bulma.modalBackground} onClick={() => onCloseClick()}></div>
 
         <div className={classNames(styles.content, bulma.modalContent)}>
-            <video src={path} autoPlay controls />
+            <video src={path} autoPlay controls playsInline muted />
         </div>
 
         <div className={classNames(bulma.modalClose, bulma.isLarge)} onClick={() => onCloseClick()}></div>

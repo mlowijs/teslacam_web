@@ -18,7 +18,7 @@ const Files: React.FunctionComponent<Props> = ({ title, files, onClipClick }) =>
 
     return (
         <div className={classNames(bulma.tile, bulma.isChild, bulma.box)}>
-            <div className={classNames(bulma.title, bulma.isSize2Touch)}>{title}</div>
+            <div className={classNames(bulma.title)}>{title}</div>
 
             <table className={bulma.table}>
                 <thead>

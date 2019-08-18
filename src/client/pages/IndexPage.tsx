@@ -7,9 +7,9 @@ import { FilesType } from "../../model/Enums";
 import classNames from "classnames";
 
 const IndexPage: React.FunctionComponent = () =>
-    <div className={classNames(styles.section, styles.isSize3Touch)}>
+    <div className={classNames(styles.section)}>
         <div className={styles.container}>
-            <div className={classNames(styles.columns, styles.isDesktop)}>
+            <div className={classNames(styles.columns)}>
                 <div className={styles.column}>
                     <StatusContainer />
                 </div>

@@ -4,7 +4,7 @@ import classNames from "classnames";
 
 const Status: React.FunctionComponent = () =>
     <div className={styles.box}>
-        <div className={classNames(styles.title, styles.isSize2Touch)}>Status</div>
+        <div className={classNames(styles.title)}>Status</div>
 
         <p>Last archive: 2019-07-23 18:54:00</p>
         <p>Last upload: 2019-07-23 18:52:12</p>

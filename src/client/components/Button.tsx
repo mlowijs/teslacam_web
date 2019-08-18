@@ -7,6 +7,6 @@ interface Props {
 }
 
 const Button: React.FunctionComponent<Props> = (props) =>
-    <button className={classNames(styles.button, styles.isSize2Touch)} onClick={props.onClick}>{props.children}</button>;
+    <button className={classNames(styles.button)} onClick={props.onClick}>{props.children}</button>;
 
 export default Button;
