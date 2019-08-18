@@ -1,6 +1,6 @@
 import { Configuration } from "./Configuration";
 import express, { Request, Response, NextFunction } from "express";
-import { index, downloadFile, listFiles, forceArchive, forceUpload } from "./Routes";
+import { index, listFiles, forceArchive, forceUpload, video } from "./Routes";
 import * as core from "express-serve-static-core";
 import StateManager from "./services/StateManager";
 import LogFactory from "./services/LogFactory";
@@ -62,7 +62,7 @@ export default class WebServer {
 
     private setupRoutes(config: Configuration) {
         this.app.get("/", index);
-        this.app.get("/download/:type/:file", downloadFile(config));
+        this.app.get("/video/:type/:file", video(config));
         this.app.get("/files/:filesType", listFiles(config));
         this.app.post("/actions/forceArchive", forceArchive(this.stateManager));
         this.app.post("/actions/forceUpload", forceUpload(this.stateManager));

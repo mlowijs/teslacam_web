@@ -10,15 +10,12 @@ export const index = (_: Request, res: Response) => {
     res.redirect("/index.html");
 };
 
-export const downloadFile = (config: Configuration) => (req: Request, res: Response) => {
+export const video = (config: Configuration) => (req: Request, res: Response) => {
     const type = req.params.type;
     const file = req.params.file;
 
     const options = {
-        root: config.archiveFolder,
-        headers: {
-            "Content-Disposition": `attachment; filename="${file}"`
-        }
+        root: config.archiveFolder
     };
 
     res.sendFile(`${type}/${file}`, options);

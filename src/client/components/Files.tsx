@@ -10,14 +10,15 @@ import { FilesType } from "../../model/Enums";
 interface Props {
     title: string;
     files: ApiFileSystemEntry[];
+    onClipClick: (type: string, name: string) => void;
 }
 
-const Files: React.FunctionComponent<Props> = (props) => {
-    const groupedFiles = Object.values(lodash.groupBy(props.files, f => f.date));
+const Files: React.FunctionComponent<Props> = ({ title, files, onClipClick }) => {
+    const groupedFiles = Object.values(lodash.groupBy(files, f => f.date));
 
     return (
         <div className={classNames(bulma.tile, bulma.isChild, bulma.box)}>
-            <div className={classNames(bulma.title, bulma.isSize2Touch)}>{props.title}</div>
+            <div className={classNames(bulma.title, bulma.isSize2Touch)}>{title}</div>
 
             <table className={bulma.table}>
                 <thead>
@@ -30,7 +31,7 @@ const Files: React.FunctionComponent<Props> = (props) => {
                     {groupedFiles.map(files => {
                         const date = files[0].date;
                         const type = files[0].type == FilesType.SAVED ? "saved" : "recent";
-                        const types = files.map(f => <a className={styles.clipLink} href={`${process.env.SERVER_URI}/download/${type}/${f.name}`}>{f.camera}</a>);
+                        const types = files.map(f => <a className={styles.clipLink} onClick={() => onClipClick(type, f.name)}>{f.camera}</a>);
 
                         return (
                             <tr key={date}>
