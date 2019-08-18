@@ -5,6 +5,7 @@ import { ApiFileSystemEntry } from "../../model/Models";
 import classNames from "classnames";
 import moment from "moment";
 import lodash from "lodash";
+import { FilesType } from "../../model/Enums";
 
 interface Props {
     title: string;
@@ -28,7 +29,8 @@ const Files: React.FunctionComponent<Props> = (props) => {
                 <tbody>
                     {groupedFiles.map(files => {
                         const date = files[0].date;
-                        const types = files.map(f => <a className={styles.clipLink} href={`${process.env.SERVER_URI}/download/${f.name}`}>{f.type}</a>);
+                        const type = files[0].type == FilesType.SAVED ? "saved" : "recent";
+                        const types = files.map(f => <a className={styles.clipLink} href={`${process.env.SERVER_URI}/download/${type}/${f.name}`}>{f.camera}</a>);
 
                         return (
                             <tr key={date}>

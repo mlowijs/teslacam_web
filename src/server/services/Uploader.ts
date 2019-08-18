@@ -20,6 +20,11 @@ export default class Uploader extends EventEmitter {
     }
 
     public async upload() {
+        if (!this.config.upload) {
+            this.log.debug("Skipping upload");
+            return;
+        }
+
         await this.uploadSavedClips();
         await this.uploadRecentClips();
     }

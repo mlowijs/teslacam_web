@@ -1,6 +1,9 @@
+import { FilesType } from "./Enums";
+
 export interface ApiFileSystemEntry {
     name: string;
     date: string;
     size: number;
-    type: string;
+    camera: string;
+    type: FilesType;
 }

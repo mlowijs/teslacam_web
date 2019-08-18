@@ -7,15 +7,15 @@ export interface FileSystemEntry {
     path: string;
     date: Moment;
     size: number;
-    type: string;
+    camera: string;
 }
 
-const fileTypes = ["front", "left_repeater", "right_repeater"];
+const filesCameras = ["front", "left_repeater", "right_repeater"];
 
-const getFileType = (name: string): string => {
-    for (const fileType of fileTypes) {
-        if (name.includes(fileType))
-            return fileType;
+const getFileCamera = (name: string): string => {
+    for (const fileCamera of filesCameras) {
+        if (name.includes(fileCamera))
+            return fileCamera;
     }
 
     return null;
@@ -33,7 +33,7 @@ export default class FileSystem {
                 path: filePath,
                 date: moment(f.substr(0, 19), "YYYY-MM-DD_HH-mm-ss"),
                 size: fs.statSync(filePath).size,
-                type: getFileType(f)
+                camera: getFileCamera(f)
             };
         });
     }

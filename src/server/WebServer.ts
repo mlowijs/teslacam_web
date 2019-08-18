@@ -62,7 +62,7 @@ export default class WebServer {
 
     private setupRoutes(config: Configuration) {
         this.app.get("/", index);
-        this.app.get("/download/:file", downloadFile(config));
+        this.app.get("/download/:type/:file", downloadFile(config));
         this.app.get("/files/:filesType", listFiles(config));
         this.app.post("/actions/forceArchive", forceArchive(this.stateManager));
         this.app.post("/actions/forceUpload", forceUpload(this.stateManager));

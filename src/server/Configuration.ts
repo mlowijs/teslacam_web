@@ -13,6 +13,7 @@ export type Configuration = {
     archiveFolder: string;
     archiveRecent: boolean;
     archiveSaved: boolean;
+    upload: boolean;
     archiveInterval: number;
     uploadInterval: number;
     uploader: "blobStorage" | "fileSystem";
