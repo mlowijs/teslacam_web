@@ -1,24 +1,30 @@
 import * as fs from "fs";
 import * as rimraf from "rimraf";
 import moment, { Moment } from "moment";
+import { Camera } from "../../model/Enums";
 
 export interface FileSystemEntry {
     name: string;
     path: string;
     date: Moment;
     size: number;
-    camera: string;
+    camera: Camera;
 }
 
-const filesCameras = ["front", "left_repeater", "right_repeater"];
+const filesCameras = [null, "front", "left_repeater", "right_repeater"];
 
-const getFileCamera = (name: string): string => {
-    for (const fileCamera of filesCameras) {
+const getFileCamera = (name: string): Camera => {
+    let camera = Camera.UNKNOWN;
+
+    filesCameras.forEach((fileCamera, i) => {
+        if (fileCamera === null)
+            return;
+            
         if (name.includes(fileCamera))
-            return fileCamera;
-    }
+            camera = i as Camera;
+    });
 
-    return null;
+    return camera;
 };
 
 export default class FileSystem {

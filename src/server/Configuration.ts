@@ -1,6 +1,6 @@
 import * as fs from "fs";
 import * as yaml from "yaml";
-import { CONFIG_FILE_NAME } from "../Constants";
+import { CONFIG_FILE_NAME } from "./Constants";
 import * as path from "path";
 
 export type Configuration = {

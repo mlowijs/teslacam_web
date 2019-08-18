@@ -13,7 +13,7 @@ import Uploader from "./services/Uploader";
 import {
     ARCHIVE_STARTED, ARCHIVE_COMPLETED, ARCHIVE_STARTS_AT,
     UPLOAD_STARTED, UPLOAD_COMPLETED, UPLOAD_STARTS_AT, UPLOADING_FILE,
- } from "../Constants";
+ } from "./Constants";
  import cors from "cors";
 
 export default class WebServer {

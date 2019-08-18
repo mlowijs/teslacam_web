@@ -7,7 +7,7 @@ import { Logger } from "pino";
 import LogFactory from "../services/LogFactory";
 import { FileUploadEvent } from "../../model/Events";
 import { EventEmitter } from "events";
-import { UPLOADING_FILE } from "../../Constants";
+import { UPLOADING_FILE } from "../Constants";
 
 interface FileSystemFileUploaderConfiguration {
     path: string;

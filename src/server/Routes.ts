@@ -4,7 +4,7 @@ import { FilesType } from "../model/Enums";
 import FileSystem, { FileSystemEntry } from "./services/FileSystem";
 import { ApiFileSystemEntry } from "../model/Models";
 import StateManager from "./services/StateManager";
-import { ARCHIVE_RECENT_FOLDER, ARCHIVE_SAVED_FOLDER } from "../Constants";
+import { ARCHIVE_RECENT_FOLDER, ARCHIVE_SAVED_FOLDER } from "./Constants";
 
 export const index = (_: Request, res: Response) => {
     res.redirect("/index.html");

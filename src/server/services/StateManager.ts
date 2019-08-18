@@ -6,7 +6,7 @@ import Archiver from "./Archiver";
 import Uploader from "./Uploader";
 import moment, { Moment } from "moment";
 import { EventEmitter } from "events";
-import { ARCHIVE_STARTS_AT, UPLOAD_STARTS_AT } from "../../Constants";
+import { ARCHIVE_STARTS_AT, UPLOAD_STARTS_AT } from "../Constants";
 
 export default class StateManager extends EventEmitter {
     private readonly log: Logger;

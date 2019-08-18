@@ -4,7 +4,7 @@ import FileUploader from "./FileUploader";
 import FileSystem, { FileSystemEntry } from "./FileSystem";
 import LogFactory from "./LogFactory";
 import { EventEmitter } from "events";
-import { UPLOAD_STARTED, UPLOAD_COMPLETED, ARCHIVE_RECENT_FOLDER, ARCHIVE_SAVED_FOLDER } from "../../Constants";
+import { UPLOAD_STARTED, UPLOAD_COMPLETED, ARCHIVE_RECENT_FOLDER, ARCHIVE_SAVED_FOLDER } from "../Constants";
 
 export default class Uploader extends EventEmitter {
     private readonly log: Logger;

@@ -5,12 +5,27 @@ import { ApiFileSystemEntry } from "../../model/Models";
 import classNames from "classnames";
 import moment from "moment";
 import lodash from "lodash";
-import { FilesType } from "../../model/Enums";
+import { FilesType, Camera } from "../../model/Enums";
+import { mdiCamcorder } from "@mdi/js";
+import Icon from "@mdi/react";
 
 interface Props {
     title: string;
     files: ApiFileSystemEntry[];
     onClipClick: (type: string, name: string) => void;
+}
+
+function getRotate(file: ApiFileSystemEntry) {
+    switch (file.camera) {
+        case Camera.FRONT:
+            return 270;
+        case Camera.LEFT_REPEATER:
+            return 125;
+        case Camera.RIGHT_REPEATER:
+            return 55;
+    }
+
+    return 0;
 }
 
 const Files: React.FunctionComponent<Props> = ({ title, files, onClipClick }) => {
@@ -31,7 +46,12 @@ const Files: React.FunctionComponent<Props> = ({ title, files, onClipClick }) =>
                     {groupedFiles.map(files => {
                         const date = files[0].date;
                         const type = files[0].type == FilesType.SAVED ? "saved" : "recent";
-                        const types = files.map(f => <a className={styles.clipLink} onClick={() => onClipClick(type, f.name)}>{f.camera}</a>);
+
+                        const types = files.map(f => 
+                            <div className={styles.clip} onClick={() => onClipClick(type, f.name)}>
+                                <Icon path={mdiCamcorder} rotate={getRotate(f)} />
+                            </div>
+                        );
 
                         return (
                             <tr key={date}>

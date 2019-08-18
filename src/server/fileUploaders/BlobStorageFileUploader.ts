@@ -5,7 +5,7 @@ import { Configuration } from "../Configuration";
 import { Logger } from "pino";
 import { SharedKeyCredential, BlobServiceClient, ContainerClient } from "@azure/storage-blob";
 import { EventEmitter } from "events";
-import { UPLOADING_FILE } from "../../Constants";
+import { UPLOADING_FILE } from "../Constants";
 import { FileUploadEvent } from "../../model/Events";
 
 interface BlobStorageFileUploaderConfiguration {
