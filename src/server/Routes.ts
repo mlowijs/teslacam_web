@@ -5,14 +5,14 @@ import FileSystem, { FileSystemEntry } from "./services/FileSystem";
 import { ApiFileSystemEntry, ApiStatus } from "../model/Models";
 import StateManager from "./services/StateManager";
 import { ARCHIVE_RECENT_FOLDER, ARCHIVE_SAVED_FOLDER } from "./Constants";
-import diskUsage from "diskusage";
+import df from "@sindresorhus/df";
 
 export const index = (_: Request, res: Response) => {
     res.redirect("/index.html");
 };
 
-export const getStatus = (config: Configuration, stateManager: StateManager) => (_: Request, res: Response) => {
-    const diskInfo = diskUsage.checkSync(config.archiveFolder);
+export const getStatus = (config: Configuration, stateManager: StateManager) => async (_: Request, res: Response) => {
+    const diskInfo = await df.file(config.archiveFolder);
     const savedClips = FileSystem.getFolderContents(`${config.archiveFolder}/${ARCHIVE_SAVED_FOLDER}`);
     const recentClips = FileSystem.getFolderContents(`${config.archiveFolder}/${ARCHIVE_RECENT_FOLDER}`);
 
@@ -21,8 +21,8 @@ export const getStatus = (config: Configuration, stateManager: StateManager) => 
     const status: ApiStatus = {
         lastArchive: stateManager.lastArchive.toISOString(),
         lastUpload: stateManager.lastUpload.toISOString(),
-        diskFree: diskInfo.free,
-        diskSize: diskInfo.total,
+        diskFree: diskInfo.available,
+        diskSize: diskInfo.size,
         savedClipsCount: savedClips.length,
         savedClipsBytes: getClipsSize(savedClips),
         recentClipsCount: recentClips.length,
