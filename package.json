@@ -5,9 +5,10 @@
   "main": "dist/main.js",
   "ts:main": "src/server/main.ts",
   "scripts": {
-    "build": "rimraf dist && run-s build:** && cp package.json dist/",
+    "build": "rimraf dist && run-s build:**",
     "build:client": "cross-env NODE_ENV=production webpack --config webpack.client.js --progress",
     "build:server": "cross-env NODE_ENV=production webpack --config webpack.server.js --progress",
+    "dist": "run-s build && cp -R node_modules dist && cd dist && npm prune --production",
     "start": "run-p start:** watch:server",
     "start:client": "webpack-dev-server --config webpack.client.js --host 0.0.0.0",
     "start:server": "webpack --config webpack.server.js --watch",
@@ -15,6 +16,7 @@
   },
   "author": "Michiel Lowijs",
   "license": "ISC",
+  "sideEffects": false,
   "dependencies": {
     "@azure/storage-blob": "^12.0.0-preview.1",
     "@mdi/js": "^4.0.96",
