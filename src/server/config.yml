@@ -8,6 +8,7 @@ mountTeslaCamFolder: true
 archiveFolder: "/archive"
 archiveRecent: false
 archiveSaved: false
+upload: true
 archiveInterval: 60
 uploadInterval: 60
 
@@ -18,6 +19,6 @@ fileSystemFileUploader:
   requiresMount: false
 
 blobStorageFileUploader:
-  accountName: "mlcloudshell"
-  accountKey: "GTtwDUEUP/KA7XJAyOPCs8R/h+qoLr88U38xIka0hVsyN3nKb2Ydf5///KEz2pjLqSocGEa7o84d6RhfbPXuuw=="
+  accountName: ""
+  accountKey: ""
   containerName: "teslacam"
