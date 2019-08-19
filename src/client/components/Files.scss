@@ -1,0 +1,19 @@
+@import "../index.scss";
+
+.clip {
+    margin-right: 6px;
+    display: inline-block;
+    width: 24px;
+
+    svg {
+        cursor: pointer;
+
+        &.saved {
+            fill: $red;
+        }
+
+        &.recent {
+            fill: $cyan;
+        }
+    }
+}

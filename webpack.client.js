@@ -1,6 +1,7 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const Dotenv = require("dotenv-webpack");
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const isProduction = process.env.NODE_ENV === "production";
 
@@ -10,6 +11,10 @@ const htmlWebpackPlugin = new HtmlWebpackPlugin({
 
 const dotenv = new Dotenv({
     path: isProduction ? "./src/client/.env" : "./src/client/.env.development"
+});
+
+const extractText = new MiniCssExtractPlugin({
+    filename: "[name].css"
 });
 
 module.exports = {
@@ -29,17 +34,19 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /\.css$/,
+                test: /\.s[ac]ss$/,
                 use: [
-                    "style-loader",
+                    MiniCssExtractPlugin.loader,
                     "css-modules-typescript-loader",
                     {
                         loader: "css-loader",
                         options: {
                             sourceMap: !isProduction,
-                            modules: true
+                            modules: true,
+                            localsConvention: "dashesOnly"
                         }
                     },
+                    "sass-loader"
                 ]
             },
             {
@@ -51,7 +58,8 @@ module.exports = {
 
     plugins: [
         htmlWebpackPlugin,
-        dotenv
+        dotenv,
+        extractText
     ],
 
     devServer: {

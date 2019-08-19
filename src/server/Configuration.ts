@@ -1,6 +1,6 @@
 import * as fs from "fs";
 import * as yaml from "yaml";
-import { CONFIG_FILE_NAME } from "../Constants";
+import { CONFIG_FILE_NAME } from "./Constants";
 import * as path from "path";
 
 export type Configuration = {
@@ -8,12 +8,15 @@ export type Configuration = {
 
     port: number;
     logLevel: string;
-    usbMountFolder: string;
+    teslaCamFolder: string;
+    mountTeslaCamFolder: boolean;
     archiveFolder: string;
     archiveRecent: boolean;
     archiveSaved: boolean;
+    upload: boolean;
     archiveInterval: number;
     uploadInterval: number;
+    uploader: "blobStorage" | "fileSystem";
 }
 
 export function getConfiguration() {

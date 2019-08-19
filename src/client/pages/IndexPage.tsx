@@ -1,11 +1,34 @@
+import * as styles from "../index.scss";
 import * as React from "react";
-import { ActionsContainer } from "../containers/ActionsContainer";
-import { FilesContainer } from "../containers/FilesContainer";
+import ActionsContainer from "../containers/ActionsContainer";
+import StatusContainer from "../containers/StatusContainer";
+import FilesContainer from "../containers/FilesContainer";
+import { FilesType } from "../../model/Enums";
+import classNames from "classnames";
 
-export const IndexPage: React.FunctionComponent = () =>
-    <div>
-        <h1>TeslaCam Browser</h1>
+const IndexPage: React.FunctionComponent = () =>
+    <div className={classNames(styles.section)}>
+        <div className={styles.container}>
+            <div className={classNames(styles.columns)}>
+                <div className={styles.column}>
+                    <StatusContainer />
+                </div>
+                <div className={styles.column}>
+                    <ActionsContainer />
+                </div>
+            </div>
+            
+            <div className={classNames(styles.tile, styles.isAncestor)}>
+                {/* <div className={classNames(styles.tile, styles.isVertical, styles.isParent)}>
+                    <FilesContainer filesType={FilesType.SAVED} title="Saved" />
+                    <FilesContainer filesType={FilesType.RECENT} title="Recent" />
+                </div> */}
 
-        <ActionsContainer />
-        <FilesContainer />
+                <div className={classNames(styles.tile, styles.isParent)}>
+                    <FilesContainer filesType={FilesType.ARCHIVE} title="Archive" />
+                </div>
+            </div>
+        </div>
     </div>;
+
+export default IndexPage;

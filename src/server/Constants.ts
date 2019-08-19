@@ -5,6 +5,8 @@ export const ONE_MEGABYTE = 1024 * 1024;
 export const TESLA_CAM = "TeslaCam";
 export const SAVED_CLIPS = "SavedClips";
 export const RECENT_CLIPS = "RecentClips";
+export const ARCHIVE_SAVED_FOLDER = "saved";
+export const ARCHIVE_RECENT_FOLDER = "recent";
 
 export const ARCHIVE_STARTED = "archiveStarted";
 export const ARCHIVE_COMPLETED = "archiveCompleted";
@@ -15,4 +17,3 @@ export const UPLOAD_STARTS_AT = "uploadStartsAt";
 export const UPLOADING_FILE = "uploadingFile";
 export const FORCE_ARCHIVE = "forceArchive";
 export const FORCE_UPLOAD = "forceUpload";
-export const CLIENT_CONNECTED = "clientConnected";

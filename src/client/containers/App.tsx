@@ -1,7 +1,16 @@
 import * as React from "react";
-import { IndexPage } from "../pages/IndexPage";
+import Header from "../components/Header";
+import IndexPage from "../pages/IndexPage";
+import VideoContainer from "../containers/VideoContainer";
+import { Store } from "../hooks/StoreContext";
 
-export const App: React.FunctionComponent = () =>
-    <div>
+const App: React.FunctionComponent = () =>
+    <Store>
+        <Header />
+
+        <VideoContainer />
+
         <IndexPage />
-    </div>;
+    </Store>;
+
+export default App;

@@ -1,4 +1,4 @@
-import { FileUploader } from "../services/FileUploader";
+import FileUploader from "../services/FileUploader";
 import { Configuration } from "../Configuration";
 import FileSystem from "../services/FileSystem";
 import { FileSystemEntry } from "../services/FileSystem";
@@ -7,7 +7,7 @@ import { Logger } from "pino";
 import LogFactory from "../services/LogFactory";
 import { FileUploadEvent } from "../../model/Events";
 import { EventEmitter } from "events";
-import { UPLOADING_FILE } from "../../Constants";
+import { UPLOADING_FILE } from "../Constants";
 
 interface FileSystemFileUploaderConfiguration {
     path: string;
@@ -27,14 +27,19 @@ export default class FileSystemFileUploader extends EventEmitter implements File
         this.system = system;
     }
 
-    public uploadFiles(files: FileSystemEntry[]) {
+    public async uploadFiles(archiveType: string, files: FileSystemEntry[]): Promise<void> {
         const { log, config, system } = this;
 
         try {
+            const folder = `${config.path}/${archiveType}`;
+
             if (config.requiresMount) {
                 system.unmountDevices(config.path);
                 system.mountDevices(config.path);
             }
+
+            log.info("Creating upload folder %s", folder);
+            this.createClipsFolder(folder);
 
             for (let i = 0; i < files.length; i++) {
                 const file = files[i];
@@ -46,10 +51,11 @@ export default class FileSystemFileUploader extends EventEmitter implements File
                 ));
 
                 try {
-                    FileSystem.copyFile(file, config.path);
+                    FileSystem.copyFile(file, folder);
                     FileSystem.deleteFile(file);
                 } catch (e) {
-                    log.error("Failed to copy file '%s'", file.name);
+                    log.error("Failed to upload file '%s'", file.name);
+                    log.error(e);
                 }
             }
         } catch (e) {
@@ -60,5 +66,10 @@ export default class FileSystemFileUploader extends EventEmitter implements File
             if (config.requiresMount)
                 system.unmountDevices(config.path);
         }
+    }
+
+    private createClipsFolder(folder: string) {
+        if (!FileSystem.exists(folder))
+            FileSystem.createFolder(folder);
     }
 }

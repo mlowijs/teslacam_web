@@ -1,10 +1,10 @@
 import { Logger } from "pino";
 import { Configuration } from "../Configuration";
-import { FileUploader } from "./FileUploader";
-import FileSystem from "./FileSystem";
+import FileUploader from "./FileUploader";
+import FileSystem, { FileSystemEntry } from "./FileSystem";
 import LogFactory from "./LogFactory";
 import { EventEmitter } from "events";
-import { UPLOAD_STARTED, UPLOAD_COMPLETED } from "../../Constants";
+import { UPLOAD_STARTED, UPLOAD_COMPLETED, ARCHIVE_RECENT_FOLDER, ARCHIVE_SAVED_FOLDER } from "../Constants";
 
 export default class Uploader extends EventEmitter {
     private readonly log: Logger;
@@ -19,25 +19,59 @@ export default class Uploader extends EventEmitter {
         this.fileUploader = fileUploader;
     }
 
-    public upload() {
-        const { log, fileUploader, config } = this;
+    public async upload() {
+        if (!this.config.upload) {
+            this.log.debug("Skipping upload");
+            return;
+        }
+
+        this.emit(UPLOAD_STARTED);
+
+        await this.uploadSavedClips();
+        await this.uploadRecentClips();
+
+        this.emit(UPLOAD_COMPLETED);
+    }
+
+    private async uploadRecentClips() {
+        const { config } = this;
+
+        const path = `${config.archiveFolder}/${ARCHIVE_RECENT_FOLDER}`;
+
+        if (!FileSystem.exists(path))
+            return;
+
+        const recentFiles = FileSystem.getFolderContents(path);
+        await this.uploadFiles(ARCHIVE_RECENT_FOLDER, recentFiles);
+    }
+
+    private async uploadSavedClips() {
+        const { config } = this;
+
+        const path = `${config.archiveFolder}/${ARCHIVE_SAVED_FOLDER}`;
+
+        if (!FileSystem.exists(path))
+            return;
+
+        const savedFiles = FileSystem.getFolderContents(path);
+        await this.uploadFiles(ARCHIVE_SAVED_FOLDER, savedFiles);
+    }
+
+    private async uploadFiles(archiveType: string, files: FileSystemEntry[])
+    {
+        const { log, fileUploader } = this;
 
         try {
-            log.info("Starting upload archived clips");
-            this.emit(UPLOAD_STARTED);
-
-            const files = FileSystem.getFolderContents(config.archiveFolder);
+            log.info(`Starting upload of folder ${archiveType}`);
 
             if (files.length === 0)
-                log.info("No archived clips found");
+                log.info(`No files found for folder ${archiveType}`);
             else
-                fileUploader.uploadFiles(files);
+                await fileUploader.uploadFiles(archiveType, files);
 
-            log.info("Upload archived clips completed");
+            log.info(`Finished upload of folder ${archiveType}`);
         } catch (e) {
             log.fatal(e.message);
-        } finally {
-            this.emit(UPLOAD_COMPLETED);
         }
     }
 }

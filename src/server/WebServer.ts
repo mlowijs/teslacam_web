@@ -1,20 +1,20 @@
 import { Configuration } from "./Configuration";
 import express, { Request, Response, NextFunction } from "express";
-import { index, downloadFile } from "./Routes";
+import { index, listFiles, forceArchive, forceUpload, video, getStatus } from "./Routes";
 import * as core from "express-serve-static-core";
 import StateManager from "./services/StateManager";
 import LogFactory from "./services/LogFactory";
 import { Logger } from "pino";
 import * as path from "path";
-import socketio, { Socket } from "socket.io";
+import socketio from "socket.io";
 import * as http from "http";
 import Archiver from "./services/Archiver";
 import Uploader from "./services/Uploader";
 import {
     ARCHIVE_STARTED, ARCHIVE_COMPLETED, ARCHIVE_STARTS_AT,
-    UPLOAD_STARTED, UPLOAD_COMPLETED, UPLOAD_STARTS_AT, UPLOADING_FILE, CLIENT_CONNECTED
- } from "../Constants";
-import { ClientConnectedEvent } from "../model/Events";
+    UPLOAD_STARTED, UPLOAD_COMPLETED, UPLOAD_STARTS_AT, UPLOADING_FILE,
+ } from "./Constants";
+ import cors from "cors";
 
 export default class WebServer {
     private readonly log: Logger;
@@ -38,6 +38,10 @@ export default class WebServer {
         this.server = http.createServer(this.app);
         this.setupSocketIo(this.server);
 
+        this.app.use(cors({
+            allowedHeaders: "*"
+        }));
+
         this.app.use((_: Request, res: Response, next: NextFunction) => {
             res.setHeader("Cache-Control", "no-cache");
 
@@ -58,18 +62,18 @@ export default class WebServer {
 
     private setupRoutes(config: Configuration) {
         this.app.get("/", index);
-        this.app.get("/download/:file", downloadFile(config));
+        this.app.get("/status", getStatus(config, this.stateManager));
+        this.app.get("/video/:type/:file", video(config));
+        this.app.get("/files/:filesType", listFiles(config));
+        this.app.post("/actions/forceArchive", forceArchive(this.stateManager));
+        this.app.post("/actions/forceUpload", forceUpload(this.stateManager));
     }
 
     private setupSocketIo(httpServer: http.Server) {
         this.io = socketio(httpServer);
 
-        this.io.on("connection", (socket: Socket) => {
+        this.io.on("connection", () => {
             this.log.debug("Accepted new socket.io connection");
-
-            socket.emit(CLIENT_CONNECTED, new ClientConnectedEvent(
-                this.stateManager.nextArchiveAt, this.stateManager.nextUploadAt
-            ));
         });
 
         const emitter = (name: string) => (...args: any[]) => this.io.emit(name, args);

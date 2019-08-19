@@ -2,14 +2,23 @@ port: 3000
 
 logLevel: "debug"
 
-usbMountFolder: "/mnt/usbfs"
-archiveFolder: "/cache"
+teslaCamFolder: "/mnt/usbfs"
+mountTeslaCamFolder: true
 
+archiveFolder: "/archive"
 archiveRecent: false
 archiveSaved: false
-archiveInterval: 900
-uploadInterval: 300
+upload: true
+archiveInterval: 60
+uploadInterval: 60
+
+uploader: "blobStorage" # "blobStorage", "fileSystem"
 
 fileSystemFileUploader:
   path: "/mnt/nfs"
-  requiresMount: true
+  requiresMount: false
+
+blobStorageFileUploader:
+  accountName: ""
+  accountKey: ""
+  containerName: "teslacam"

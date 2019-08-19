@@ -1,0 +1,11 @@
+[Unit]
+Description=TeslaCam
+
+[Service]
+User=michiel
+Type=simple
+WorkingDirectory=/opt/teslacam
+ExecStart=/usr/bin/node main.js
+
+[Install]
+WantedBy=multi-user.target

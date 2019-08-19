@@ -2,7 +2,7 @@ import System from "./System";
 import { Logger } from "pino";
 import { Configuration } from "../Configuration";
 import FileSystem, { FileSystemEntry } from "./FileSystem";
-import { TESLA_CAM, RECENT_CLIPS, SAVED_CLIPS, ONE_MEGABYTE, ARCHIVE_STARTED, ARCHIVE_COMPLETED } from "../../Constants";
+import { TESLA_CAM, RECENT_CLIPS, SAVED_CLIPS, ONE_MEGABYTE, ARCHIVE_STARTED, ARCHIVE_COMPLETED, ARCHIVE_SAVED_FOLDER, ARCHIVE_RECENT_FOLDER } from "../Constants";
 import LogFactory from "./LogFactory";
 import { EventEmitter } from "events";
 
@@ -25,10 +25,12 @@ export default class Archiver extends EventEmitter {
         log.info("Starting archive");
         this.emit(ARCHIVE_STARTED);
 
-        system.unmountDevices(config.usbMountFolder);
+        if (config.mountTeslaCamFolder)
+            system.unmountDevices(config.teslaCamFolder);
 
         try {
-            system.mountDevices(config.usbMountFolder);
+            if (config.mountTeslaCamFolder)
+                system.mountDevices(config.teslaCamFolder);
 
             this.archiveRecentClips();
             this.archiveSavedClips();
@@ -38,13 +40,21 @@ export default class Archiver extends EventEmitter {
             log.fatal(e.message);
         } finally {
             try {
-                system.unmountDevices(config.usbMountFolder);
+                if (config.mountTeslaCamFolder)
+                    system.unmountDevices(config.teslaCamFolder);
             } catch (e) {
                 log.error(e.message);
             }
 
             this.emit(ARCHIVE_COMPLETED);
         }
+    }
+
+    private createClipsFolder(folder: string) {
+        const path = `${this.config.archiveFolder}/${folder}`;
+
+        if (!FileSystem.exists(path))
+            FileSystem.createFolder(path);
     }
 
     private archiveRecentClips() {
@@ -57,7 +67,9 @@ export default class Archiver extends EventEmitter {
 
         log.info("Archiving recent clips");
 
-        const recentClipsPath = `${config.usbMountFolder}/${TESLA_CAM}/${RECENT_CLIPS}`;
+        this.createClipsFolder(ARCHIVE_RECENT_FOLDER);
+
+        const recentClipsPath = `${config.teslaCamFolder}/${TESLA_CAM}/${RECENT_CLIPS}`;
 
         if (!FileSystem.exists(recentClipsPath)) {
             log.info("No recent clips found");
@@ -71,7 +83,7 @@ export default class Archiver extends EventEmitter {
             return;
         }
 
-        this.archiveClips(files);
+        this.archiveClips(ARCHIVE_RECENT_FOLDER, files);
     }
 
     private archiveSavedClips() {
@@ -82,9 +94,11 @@ export default class Archiver extends EventEmitter {
             return;
         }
 
-        log.info("Archiving saved clips");        
+        log.info("Archiving saved clips");
 
-        const savedClipsPath = `${config.usbMountFolder}/${TESLA_CAM}/${SAVED_CLIPS}`;
+        this.createClipsFolder(ARCHIVE_SAVED_FOLDER);
+
+        const savedClipsPath = `${config.teslaCamFolder}/${TESLA_CAM}/${SAVED_CLIPS}`;
 
         if (!FileSystem.exists(savedClipsPath)) {
             log.info("No saved clips found");
@@ -117,23 +131,35 @@ export default class Archiver extends EventEmitter {
             return;
         }
 
-        this.archiveClips(files);
+        this.archiveClips(ARCHIVE_SAVED_FOLDER, files);
 
         FileSystem.deleteFolder(folder.path);
     }
 
-    private archiveClips(files: FileSystemEntry[]) {
+    private archiveClips(folder: string, files: FileSystemEntry[]) {
         const { log, config } = this;
 
-        for (let i = 0; i < files.length; i++) {
-            const file = files[i];
+        // Sort files by date in reverse, so that we archive the newest clips first
+        const sortedFiles = [...files].sort((a, b) => b.date.valueOf() - a.date.valueOf());
 
-            log.info("Archiving clip '%s' (%d bytes) (%d/%d)", file.name, file.size, i + 1, files.length);
+        for (let i = 0; i < sortedFiles.length; i++)
+        {
+            try 
+            {
+                const file = sortedFiles[i];
 
-            if (file.size >= ONE_MEGABYTE)
-                FileSystem.copyFile(file, config.archiveFolder);
+                log.info("Archiving clip '%s' (%d bytes) (%d/%d)", file.name, file.size, i + 1, sortedFiles.length);
 
-            FileSystem.deleteFile(file);
+                if (file.size >= ONE_MEGABYTE)
+                    FileSystem.copyFile(file, `${config.archiveFolder}/${folder}`);
+
+                FileSystem.deleteFile(file);
+            }
+            catch (e) 
+            {
+                log.error(e.message);
+                log.error(e);
+            }
         }
     }
 }

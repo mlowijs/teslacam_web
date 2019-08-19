@@ -6,7 +6,7 @@ import Archiver from "./Archiver";
 import Uploader from "./Uploader";
 import moment, { Moment } from "moment";
 import { EventEmitter } from "events";
-import { ARCHIVE_STARTS_AT, UPLOAD_STARTS_AT } from "../../Constants";
+import { ARCHIVE_STARTS_AT, UPLOAD_STARTS_AT } from "../Constants";
 
 export default class StateManager extends EventEmitter {
     private readonly log: Logger;
@@ -16,10 +16,12 @@ export default class StateManager extends EventEmitter {
     
     private archiveTimeout: NodeJS.Timeout;
     private _nextArchiveAt: Moment;
+    private _lastArchive: Moment;
     private _archiveInProgress: boolean;
 
     private uploadTimeout: NodeJS.Timeout;
     private _nextUploadAt: Moment;
+    private _lastUpload: Moment;
     private _uploadInProgress: boolean;
 
     constructor(logFactory: LogFactory, config: Configuration, archiver: Archiver, uploader: Uploader) {
@@ -30,6 +32,9 @@ export default class StateManager extends EventEmitter {
         this.archiver = archiver;
         this.uploader = uploader;
 
+        this._lastArchive = moment.unix(0);
+        this._lastUpload = moment.unix(0);
+
         this.startArchiveTimer(config.archiveInterval);
         this.startUploadTimer(config.uploadInterval);
     }
@@ -38,12 +43,20 @@ export default class StateManager extends EventEmitter {
         return this._nextArchiveAt;
     }
 
+    get lastArchive(): Moment {
+        return this._lastArchive;
+    }
+
     get archiveInProgress(): boolean {
         return this._archiveInProgress;
     }
 
     get nextUploadAt(): Moment {
         return this._nextUploadAt;
+    }
+
+    get lastUpload(): Moment {
+        return this._lastUpload;
     }
 
     get uploadInProgress(): boolean {
@@ -71,6 +84,7 @@ export default class StateManager extends EventEmitter {
             
             this._archiveInProgress = false;
             this.startArchiveTimer(this.config.archiveInterval);
+            this._lastArchive = moment();
         }
 
         this.archiveTimeout = setTimeout(handler, interval * 1000);
@@ -85,12 +99,13 @@ export default class StateManager extends EventEmitter {
             const isNetworkOnline = await isOnline();
 
             if (isNetworkOnline)
-                this.uploader.upload();
+                await this.uploader.upload();
             else
                 this.log.debug("Upload canceled, network is offline");                
             
             this._uploadInProgress = false;
             this.startUploadTimer(this.config.uploadInterval);
+            this._lastUpload = moment();
         }
 
         this.uploadTimeout = setTimeout(handler, interval * 1000);

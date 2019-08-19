@@ -1,26 +1,34 @@
 import * as React from "react";
-import { getSocket } from "../socket";
-import { CLIENT_CONNECTED } from "../../Constants";
-import { ClientConnectedEvent } from "../../model/Events";
-import { Actions } from "../components/Actions";
+import ActionsComponent from "../components/Actions";
+import * as ActionsApi from "../api/Actions";
 
-const socket = getSocket();
+const ActionsContainer: React.FunctionComponent = () => {
+    const onStartArchiverButtonClick = () => {
+        console.log("Forcing archive");
+        ActionsApi.forceArchive();
+    }
 
-export const ActionsContainer: React.FunctionComponent = () => {
-    const [event, setEvent] = React.useState<ClientConnectedEvent>(null);
+    const onOptionsButtonClick = () => {
+        console.log("Options clicked");
+    }
 
-    React.useEffect(() => {
-        socket.on(CLIENT_CONNECTED, (event: ClientConnectedEvent) => {
-            setEvent(event);
-        });
+    const onStartUploaderButtonClick = () => {
+        console.log("Forcing upload");
+        ActionsApi.forceArchive();
+    }
 
-        return () => {
-            socket.off(CLIENT_CONNECTED);
-        }
-    }, [event]);
+    const onSyncRecentsButtonClick = () => {
+        console.log("Sync recents");
+    }
 
-    console.log(event);
+    return (
+        <ActionsComponent
+            onStartArchiverButtonClick={onStartArchiverButtonClick}
+            onOptionsButtonClick={onOptionsButtonClick}
+            onStartUploaderButtonClick={onStartUploaderButtonClick}
+            onSyncRecentsButtonClick={onSyncRecentsButtonClick}
+        />
+    );
+};
 
-
-    return event ? <Actions event={event} /> : null;
-}
+export default ActionsContainer;
