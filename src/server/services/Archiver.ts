@@ -98,7 +98,6 @@ export default class Archiver extends EventEmitter {
 
         this.createClipsFolder(ARCHIVE_SAVED_FOLDER);
 
-
         const savedClipsPath = `${config.teslaCamFolder}/${TESLA_CAM}/${SAVED_CLIPS}`;
 
         if (!FileSystem.exists(savedClipsPath)) {

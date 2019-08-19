@@ -14,11 +14,20 @@ export const index = (_: Request, res: Response) => {
 export const getStatus = (config: Configuration, stateManager: StateManager) => (_: Request, res: Response) => {
     const diskInfo = diskUsage.checkSync(config.archiveFolder);
     
+    const savedClips = FileSystem.getFolderContents(`${config.archiveFolder}/${ARCHIVE_SAVED_FOLDER}`);
+    const recentClips = FileSystem.getFolderContents(`${config.archiveFolder}/${ARCHIVE_RECENT_FOLDER}`);
+
+    const getFilesSize = (files: FileSystemEntry[]) => files.reduce((a, f) => a + f.size, 0);
+
     const status: ApiStatus = {
         lastArchive: stateManager.lastArchive.toISOString(),
         lastUpload: stateManager.lastUpload.toISOString(),
         diskFree: diskInfo.free,
-        diskSize: diskInfo.total
+        diskSize: diskInfo.total,
+        savedClipsCount: savedClips.length,
+        savedClipsBytes: getFilesSize(savedClips),
+        recentClipsCount: recentClips.length,
+        recentClipsBytes: getFilesSize(recentClips)
     };
 
     res.json(status);

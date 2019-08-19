@@ -38,17 +38,16 @@ const Status: React.FunctionComponent<Props> = ({ status }) =>
                     </tr>
                     <tr>
                         <th>Saved clips</th>
-                        <td></td>
+                        <td>{status.savedClipsCount} clips, {fileSizePartial(status.savedClipsBytes)} used</td>
                     </tr>
                     <tr>
                         <th>Recent clips</th>
+                        <td>{status.recentClipsCount} clips, {fileSizePartial(status.recentClipsBytes)} used</td>
                         <td></td>
                     </tr>
                 </tbody>
             </table>
             // <>
-            //     <p>Disk: 24GB free, 40GB used, 64GB total</p>
-            //     <p>28GB in Saved Clips</p>
             //     <p>12GB in Recent Clips</p>
             // </>
         }

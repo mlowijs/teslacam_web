@@ -13,4 +13,8 @@ export interface ApiStatus {
     lastUpload: string;
     diskFree: number;
     diskSize: number;
+    savedClipsCount: number;
+    savedClipsBytes: number;
+    recentClipsCount: number;
+    recentClipsBytes: number;
 }

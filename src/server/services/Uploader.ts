@@ -25,8 +25,12 @@ export default class Uploader extends EventEmitter {
             return;
         }
 
+        this.emit(UPLOAD_STARTED);
+
         await this.uploadSavedClips();
         await this.uploadRecentClips();
+
+        this.emit(UPLOAD_COMPLETED);
     }
 
     private async uploadRecentClips() {
@@ -59,7 +63,6 @@ export default class Uploader extends EventEmitter {
 
         try {
             log.info(`Starting upload of folder ${archiveType}`);
-            this.emit(UPLOAD_STARTED);
 
             if (files.length === 0)
                 log.info(`No files found for folder ${archiveType}`);
@@ -69,8 +72,6 @@ export default class Uploader extends EventEmitter {
             log.info(`Finished upload of folder ${archiveType}`);
         } catch (e) {
             log.fatal(e.message);
-        } finally {
-            this.emit(UPLOAD_COMPLETED);
         }
     }
 }
