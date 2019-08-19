@@ -46,11 +46,13 @@ const Files: React.FunctionComponent<Props> = ({ title, files, onClipClick }) =>
                 <tbody>
                     {groupedFiles.map(files => {
                         const date = files[0].date;
-                        const type = files[0].type == FilesType.SAVED ? "saved" : "recent";
+                        const filesType = files[0].type;
+
+                        const type = filesType == FilesType.SAVED ? "saved" : "recent";
 
                         const types = files.map(f => 
                             <div className={styles.clip} onClick={() => onClipClick(type, f.name)}>
-                                <Icon path={mdiCamcorder} rotate={getRotate(f)} />
+                                <Icon path={mdiCamcorder} rotate={getRotate(f)} className={filesType == FilesType.SAVED ? styles.saved : styles.recent} />
                             </div>
                         );
 
