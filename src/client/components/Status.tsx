@@ -5,7 +5,6 @@ import classNames from "classnames";
 import { ApiStatus } from "../../model/Models";
 import fileSize from "filesize";
 import moment from "moment";
-import classNames from "classnames";
 
 interface Props {
     status: ApiStatus;
