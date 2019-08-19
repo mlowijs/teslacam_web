@@ -35,7 +35,7 @@ const Files: React.FunctionComponent<Props> = ({ title, files, onClipClick }) =>
         <div className={classNames(bulma.tile, bulma.isChild, bulma.box)}>
             <div className={classNames(bulma.title)}>{title}</div>
 
-            <table className={bulma.table}>
+            <table className={classNames(bulma.table, bulma.isFullwidth, bulma.isStriped)}>
                 <thead>
                     <tr>
                         <th>Clip</th>
@@ -56,7 +56,7 @@ const Files: React.FunctionComponent<Props> = ({ title, files, onClipClick }) =>
                         return (
                             <tr key={date}>
                                 <td>{types}</td>
-                                <td>{moment(date).format("D-M-YYYY HH:mm")}</td>
+                                <td>{moment(date).format("YYYY-MM-DD HH:mm")}</td>
                             </tr>
                         );
                     })}

@@ -7,3 +7,10 @@ export interface ApiFileSystemEntry {
     camera: Camera;
     type: FilesType;
 }
+
+export interface ApiStatus {
+    lastArchive: string;
+    lastUpload: string;
+    diskFree: number;
+    diskSize: number;
+}

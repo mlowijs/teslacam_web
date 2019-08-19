@@ -1,9 +1,18 @@
 import * as React from "react";
-import Status from "../components/Status";
+import StatusComponent from "../components/Status";
+import { ApiStatus } from "../../model/Models";
+import * as Status from "../api/Status";
 
 const StatusContainer: React.FunctionComponent = () => {
+    const  [status, setStatus] = React.useState<ApiStatus>(null);
 
-    return <Status />
+    React.useEffect(() => {
+        Status.getStatus().then(status => {
+            setStatus(status);
+        });
+    }, []);
+
+    return <StatusComponent status={status} />
 };
 
 export default StatusContainer;
