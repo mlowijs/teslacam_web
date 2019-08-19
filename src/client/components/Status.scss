@@ -1,5 +1,5 @@
 .Status {
-    .disk span:after {
-        content: ' '        
+    .stats span {
+        display: inline-block;
     }
 }

@@ -30,20 +30,25 @@ const Status: React.FunctionComponent<Props> = ({ status }) =>
                     </tr>
                     <tr>
                         <th>Disk</th>
-                        <td className={styles.disk}>
-                            <span>{fileSizePartial(status.diskFree)} free,</span>
-                            <span>{fileSizePartial(status.diskSize - status.diskFree)} used,</span>
+                        <td className={styles.stats}>
+                            <span>{fileSizePartial(status.diskFree)} free,&nbsp;</span>
+                            <span>{fileSizePartial(status.diskSize - status.diskFree)} used,&nbsp;</span>
                             <span>{fileSizePartial(status.diskSize)} total</span>
                         </td>
                     </tr>
                     <tr>
                         <th>Saved clips</th>
-                        <td>{status.savedClipsCount} clips, {fileSizePartial(status.savedClipsBytes)} used</td>
+                        <td className={styles.stats}>
+                            <span>{status.savedClipsCount} clips,&nbsp;</span>
+                            <span>{fileSizePartial(status.savedClipsBytes)} used</span>
+                        </td>
                     </tr>
                     <tr>
                         <th>Recent clips</th>
-                        <td>{status.recentClipsCount} clips, {fileSizePartial(status.recentClipsBytes)} used</td>
-                        <td></td>
+                        <td className={styles.stats}>
+                            <span>{status.recentClipsCount} clips,&nbsp;</span>
+                            <span>{fileSizePartial(status.recentClipsBytes)} used</span>
+                        </td>
                     </tr>
                 </tbody>
             </table>

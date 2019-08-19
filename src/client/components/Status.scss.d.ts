@@ -2,7 +2,7 @@
 // Please do not change this file!
 interface CssExports {
   'Status': string;
-  'disk': string;
+  'stats': string;
 }
 declare var cssExports: CssExports;
 export = cssExports;
