@@ -8,6 +8,7 @@ import lodash from "lodash";
 import { FilesType, Camera } from "../../model/Enums";
 import { mdiCamcorder } from "@mdi/js";
 import Icon from "@mdi/react";
+import { DATE_FORMAT } from "../Constants";
 
 interface Props {
     title: string;
@@ -56,7 +57,7 @@ const Files: React.FunctionComponent<Props> = ({ title, files, onClipClick }) =>
                         return (
                             <tr key={date}>
                                 <td>{types}</td>
-                                <td>{moment(date).format("YYYY-MM-DD HH:mm")}</td>
+                                <td>{moment(date).format(DATE_FORMAT)}</td>
                             </tr>
                         );
                     })}

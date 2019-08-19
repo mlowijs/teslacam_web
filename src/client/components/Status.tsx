@@ -5,6 +5,7 @@ import classNames from "classnames";
 import { ApiStatus } from "../../model/Models";
 import fileSize from "filesize";
 import moment from "moment";
+import { DATE_FORMAT } from "../Constants";
 
 interface Props {
     status: ApiStatus;
@@ -21,11 +22,11 @@ const Status: React.FunctionComponent<Props> = ({ status }) =>
                 <tbody>
                     <tr>
                         <th>Last archive</th>
-                        <td>{moment(status.lastArchive).format("YYYY-MM-DD HH:mm")}</td>
+                        <td>{moment(status.lastArchive).format(DATE_FORMAT)}</td>
                     </tr>
                     <tr>
                         <th>Last upload</th>
-                        <td>{moment(status.lastUpload).format("YYYY-MM-DD HH:mm")}</td>
+                        <td>{moment(status.lastUpload).format(DATE_FORMAT)}</td>
                     </tr>
                     <tr>
                         <th>Disk</th>
