@@ -1,5 +1,5 @@
 import * as fs from "fs";
-import * as rimraf from "rimraf";
+import rimraf from "rimraf";
 import moment, { Moment } from "moment";
 import { Camera } from "../../model/Enums";
 
@@ -42,6 +42,10 @@ export default class FileSystem {
                 camera: getFileCamera(f)
             };
         });
+    }
+
+    public static getFileSize(path: string): number {
+        return fs.statSync(path).size;
     }
 
     public static deleteFile(file: FileSystemEntry) {

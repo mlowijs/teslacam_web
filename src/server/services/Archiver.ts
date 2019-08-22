@@ -126,12 +126,10 @@ export default class Archiver extends EventEmitter {
 
         const files = FileSystem.getFolderContents(folder.path);
 
-        if (files.length === 0) {
+        if (files.length === 0)
             log.info("Saved clips folder is empty");
-            return;
-        }
-
-        this.archiveClips(ARCHIVE_SAVED_FOLDER, files);
+        else
+            this.archiveClips(ARCHIVE_SAVED_FOLDER, files);
 
         FileSystem.deleteFolder(folder.path);
     }
