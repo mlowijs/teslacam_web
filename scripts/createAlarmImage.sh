@@ -70,4 +70,4 @@ rm -rf root boot
 losetup -d /dev/loop0
 losetup -d /dev/loop1
 
-cp /sdcard.img /tmp
+cp sdcard.img /tmp
