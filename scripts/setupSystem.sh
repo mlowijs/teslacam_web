@@ -5,7 +5,7 @@ if [ $EUID -ne 0 ]; then
 fi
 
 if [ $# -lt 1 ]; then
-    echo $'usage: setup.sh <Partition_size_GB>
+    echo $'usage: setup.sh <Partition_size_GB>'
     exit 1
 fi
 
