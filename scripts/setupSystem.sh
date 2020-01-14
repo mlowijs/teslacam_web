@@ -83,7 +83,19 @@ echo "g_mass_storage" >> /etc/modules-load.d/raspberrypi.conf
 pip install teslacam-py
 
 # Install systemd service
-cp teslacam.service /etc/systemd/system
+cat << EOF >> /etc/systemd/system/teslacam.service
+[Unit]
+Description=TeslaCam
+After=network-online.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/teslacam
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
 systemctl daemon-reload
 systemctl enable teslacam
 
