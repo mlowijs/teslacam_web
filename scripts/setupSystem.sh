@@ -7,7 +7,7 @@ echo "/dev/mmcblk0p2 / ext4 defaults,rw,noatime 0 1" >> /etc/fstab
 pacman-key --init
 pacman-key --populate archlinuxarm
 pacman -Syu --noconfirm
-pacman -S --noconfirm dosfstools sudo
+pacman -S --noconfirm dosfstools sudo python python-pip base-devel
 
 # Setup time zone and hostname
 ln -sf /usr/share/zoneinfo/Europe/Amsterdam /etc/localtime
@@ -69,5 +69,8 @@ echo "dwc2" >> /etc/modules-load.d/raspberrypi.conf
 # Set module options
 echo "options g_mass_storage file=/usbfs removable=1 stall=0 iSerialNumber=123456" > /etc/modprobe.d/g_mass_storage.conf
 echo "g_mass_storage" >> /etc/modules-load.d/raspberrypi.conf
+
+# Install TeslaCam software
+pip install teslacam-py
 
 reboot
