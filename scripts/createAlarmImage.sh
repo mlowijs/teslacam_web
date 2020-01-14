@@ -52,6 +52,10 @@ wget http://os.archlinuxarm.org/os/ArchLinuxARM-rpi-latest.tar.gz
 bsdtar -xpf ArchLinuxARM-rpi-latest.tar.gz -C root
 sync
 mv root/boot/* boot
+
+# Download setup script
+curl -o root/root/setup.sh https://raw.githubusercontent.com/mlowijs/teslacam_web/master/scripts/setupSystem.sh
+
 rm ArchLinuxARM-rpi-latest.tar.gz
 
 cat << EOF >> root/etc/systemd/network/wlan0.network
