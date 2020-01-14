@@ -1,11 +1,10 @@
 [Unit]
 Description=TeslaCam
+After=network-online.target
 
 [Service]
-User=michiel
 Type=simple
-WorkingDirectory=/opt/teslacam
-ExecStart=/usr/bin/node main.js
+ExecStart=/usr/bin/teslacam
 
 [Install]
 WantedBy=multi-user.target
