@@ -1,4 +1,13 @@
 #!/bin/bash
+if [ $EUID -ne 0 ]; then
+    echo 'This script must be run as root'
+    exit 1
+fi
+
+if [ $# -lt 2 ]; then
+    echo $'usage: setup.sh <Partition_size_GB>
+    exit 1
+fi
 
 # Fix root mount pount
 echo "/dev/mmcblk0p2 / ext4 defaults,rw,noatime 0 1" >> /etc/fstab
@@ -35,7 +44,7 @@ EOF
 resize2fs /dev/mmcblk0p2
 
 # Setup USB filesystem
-fallocate -l 6G /usbfs
+fallocate -l $1G /usbfs
 
 fdisk /usbfs <<EOF
 o
