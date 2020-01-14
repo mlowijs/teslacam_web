@@ -4,7 +4,7 @@ if [ $EUID -ne 0 ]; then
     exit 1
 fi
 
-if [ $# -lt 2 ]; then
+if [ $# -lt 1 ]; then
     echo $'usage: setup.sh <Partition_size_GB>
     exit 1
 fi
@@ -81,5 +81,10 @@ echo "g_mass_storage" >> /etc/modules-load.d/raspberrypi.conf
 
 # Install TeslaCam software
 pip install teslacam-py
+
+# Install systemd service
+cp teslacam.service /etc/systemd/system
+systemctl daemon-reload
+systemctl enable teslacam
 
 reboot
